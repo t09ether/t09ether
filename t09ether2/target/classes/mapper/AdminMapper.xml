@@ -1,0 +1,441 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.t09ether.home.dao.AdminDAO">
+   
+   <select id="totalRecord" resultType="int">
+      select count(userid) from registerinfo 
+      where userid not in (select userid from temp_stop)
+      <if test="searchWord!=null">
+         and ${searchKey} like '%${searchWord}%'
+      </if> 
+   </select>
+   
+   <select id="totalOrdRecord" resultType="int">
+      select count(ord_no) from order09
+      <if test="searchWord!=null">
+         where ${searchKey} like '%${searchWord}%'
+      </if> 
+   </select>
+   
+   <select id="totalOrderRecord" resultType="int">
+      select count(pd.on_no) from product_detail pd join product p on pd.pro_code=p.pro_code where pd.status<![CDATA[> ]]>1
+      <if test="searchWord!=null">
+         and ${searchKey} like '%${searchWord}%'
+      </if> 
+   </select>
+   
+   <select id="mgtPageSelect" resultType="com.t09ether.home.dto.OrderDTO">
+         select * from
+      (select * from
+         (
+            select p.on_no, p.pro_code, p.pro_name, p.userid, p.status as pd_status, o.status, to_char(o.orderdate, 'YY-MM-DD HH:MI') orderdate,to_char(p.writedate, 'YY-MM-DD HH:MI') writedate from 
+            (select pd.on_no, pd.pro_code, p.pro_name, pd.userid, pd.status, pd.writedate from product_detail pd join product p on pd.pro_code=p.pro_code and pd.status=2) p join order09 o on p.on_no=o.on_no and p.userid=o.userid
+            <if test="searchWord!=null">
+               and ${searchKey} like '%${searchWord}%' 
+            </if>
+            order by on_no desc 
+         )
+      <![CDATA[ 
+           where rownum<=${nowPage*onePageRecord} order by on_no asc 
+           ]]>
+           )
+           
+        <choose>
+           <when test="nowPage!=totalPage">   
+              <![CDATA[
+              where rownum<=${onePageRecord} order by on_no desc 
+              ]]>
+           </when>
+           <when test="nowPage==totalPage">
+              <![CDATA[
+              where rownum<=${lastPageRecord} order by on_no desc 
+              ]]>           
+           </when>
+        </choose>
+   </select>
+   
+   <update id="ordMultiUpdate">
+         update order09 set status=status+1 where on_no=#{on_no}
+   </update>
+   
+   
+   <select id="totalOrdSelect" resultType="com.t09ether.home.dto.OrderDTO">
+   select * from
+      (select * from
+         (
+            select o.ord_no, o.pro_code, o.userid, o.ord_count, o.status, o.on_no, o.orderdate, o.ord_amount, p.pro_name from order09 o join product p on o.pro_code=p.pro_code
+            <if test="searchWord!=null">
+               where ${searchKey} like '%${searchWord}%' 
+            </if>
+            order by ord_no desc 
+         )
+      <![CDATA[ 
+           where rownum<=${nowPage*onePageRecord} order by ord_no asc 
+           ]]>
+           )
+           
+        <choose>
+           <when test="nowPage!=totalPage">   
+              <![CDATA[
+              where rownum<=${onePageRecord} order by ord_no desc 
+              ]]>
+           </when>
+           <when test="nowPage==totalPage">
+              <![CDATA[
+              where rownum<=${lastPageRecord} order by ord_no desc 
+              ]]>           
+           </when>
+        </choose>
+   </select>
+   
+   
+   
+   <select id="pageSelect" resultType="com.t09ether.home.dto.RegisterDTO">
+   select * from
+      (select * from
+         (
+            select rownum, username, userid, tel, email, rank, writedate, report 
+            from registerinfo where userid not in (select userid from temp_stop)
+            <if test="searchWord!=null">
+               and ${searchKey} like '%${searchWord}%' 
+            </if>
+            order by username asc 
+         )
+      <![CDATA[ 
+           where rownum<=${nowPage*onePageRecord} order by username desc 
+           ]]>
+           )
+           
+        <choose>
+           <when test="nowPage!=totalPage">   
+              <![CDATA[
+              where rownum<=${onePageRecord} order by username asc 
+              ]]>
+           </when>
+           <when test="nowPage==totalPage">
+              <![CDATA[
+              where rownum<=${lastPageRecord} order by username asc 
+              ]]>           
+           </when>
+        </choose>
+   </select>
+   
+   <select id="rpTotalRecord" resultType="int">
+      select count(report_no) totalRecord from report
+      <if test="searchWord!=null">
+         where ${searchKey} like '%${searchWord}%'
+      </if> 
+   </select>
+   
+   <select id="reportPageSelect" resultType="com.t09ether.home.dto.ReportDTO">
+      select * from
+      (select * from
+         (
+            select report_no, mem_id, target_id, report_content, to_char(writedate, 'YY-MM-DD HH:MI') writedate, target_type 
+            from report
+            <if test="searchWord!=null">
+               where ${searchKey} like '%${searchWord}%' 
+            </if>
+            order by report_no desc 
+         )
+      <![CDATA[ 
+           where rownum<=${nowPage*onePageRecord} order by report_no asc 
+           ]]>
+           )
+           
+        <choose>
+           <when test="nowPage!=totalPage">   
+              <![CDATA[
+              where rownum<=${onePageRecord} order by report_no desc 
+              ]]>
+           </when>
+           <when test="nowPage==totalPage">
+              <![CDATA[
+              where rownum<=${lastPageRecord} order by report_no desc 
+              ]]>           
+           </when>
+        </choose>
+     </select>
+
+   <select id="userSelect" resultType="com.t09ether.home.dto.RegisterDTO">
+      select userid, username, tel, email, writedate, rank from registerinfo 
+      <![CDATA[
+      where rank>=1
+      ]]>   
+   </select>
+   
+   <!-- 통계 -->
+   <select id="regiStat" resultType="com.t09ether.home.dto.DataVO">
+      select substr(to_char(writedate, 'YY-MM'),1,5) month, count(*) as cnt
+      from (select * from registerinfo where writedate<![CDATA[>=]]>'22-12-01' and writedate<![CDATA[<=]]>'23-05-30') a 
+      group by substr(to_char(writedate, 'YY-MM'),1,5) order by month asc
+   </select>
+   <select id="onlineStat" resultType="com.t09ether.home.dto.DataVO">
+      select substr(to_char(orderdate, 'YY-MM'),1,5) month, count(pro_code) as cnt
+      from (select * from order09 where orderdate<![CDATA[>=]]>'22-12-01' and orderdate<![CDATA[<=]]>'23-05-30') a 
+      group by substr(to_char(orderdate, 'YY-MM'),1,5) order by month asc
+   </select>
+   <select id="offlineStat" resultType="com.t09ether.home.dto.DataVO">
+      select substr(to_char(writedate, 'YY-MM'),1,5) month, count(off_content) as cnt
+      from (select * from off_gb where writedate<![CDATA[>=]]>'22-12-01' and writedate<![CDATA[<=]]>'23-05-30') a 
+      group by substr(to_char(writedate, 'YY-MM'),1,5) order by month asc
+   </select>
+   <select id="onPopStat" resultType="com.t09ether.home.dto.DataVO">
+      select * from (select pro_name, count(pro_name) as cnt
+      from (select * from order09 o join product p on o.pro_code=p.pro_code where orderdate<![CDATA[>=]]>'22-12-01' and orderdate<![CDATA[<=]]>'23-05-30') a 
+      group by pro_name order by cnt desc) where rownum<![CDATA[<=]]>5
+   </select>
+
+   <!-- 온라인 상품관리 -->
+   <select id="totalProductRecord" resultType="int">
+      select count(pro_code) totalRecord from product
+      <if test="searchWord!=null">
+         where ${searchKey} like '%${searchWord}%'
+      </if> 
+   </select>
+   
+   <!-- 고객센터 게시물 + 페이징 -->
+   <select id="csTotalRecord" resultType="int">
+      select count(cus_b_num) totalRecord from cus_center
+      <if test="searchWord!=null">
+         where ${searchKey} like '%${searchWord}%'
+      </if> 
+   </select>
+
+   <select id="pageProductSelect" resultType="com.t09ether.home.dto.ProductDTO">
+      select * from
+      (select * from
+         (
+            select pro_code, pro_name, pro_price, pro_stock, image, detailed, pro_total
+               from product
+               <if test="searchWord!=null"> 
+                  where ${searchKey} like '%${searchWord}%'
+               </if>
+               order by pro_code desc)
+      
+            <![CDATA[
+            where rownum<=${onePageRecord*nowPage} order by pro_code asc
+            ]]>
+            )
+            <choose>  
+               <when test="nowPage != totalPage">
+                  <![CDATA[
+                  where rownum<=${onePageRecord} order by pro_code desc
+                  ]]>
+               </when>
+               <when test="nowPage == totalPage">
+                  <![CDATA[
+                  where rownum<=${lastPageRecord} order by pro_code desc
+                  ]]>
+               </when>
+               
+            </choose>
+   </select>
+   
+   <insert id="productInsert">
+      insert into product(pro_code, pro_price, pro_stock, detailed, image, pro_name, pro_total) values(pro_code_sq.nextval, #{pro_price}, #{pro_stock}, #{detailed}, #{image}, #{pro_name}, #{pro_total})
+   </insert>
+   
+   <delete id="productDel">
+      delete from product
+      <foreach item="item" collection="list" open="where pro_code in (" separator=", " close=")">
+         #{item}
+      </foreach>
+   </delete>
+   
+   <select id="proInfor" resultType="com.t09ether.home.dto.ProductDTO">
+      select pro_code, pro_name, pro_total, pro_price, pro_stock, image, detailed from product where pro_code=#{pro_code}
+   </select>
+   
+   <update id="productUpdate">
+      update product set pro_name=#{pro_name}, pro_price=#{pro_price}, pro_total=#{pro_total}, pro_stock=#{pro_stock}, detailed = #{detailed} where pro_code=#{pro_code}
+   </update>
+
+   
+   <!-- 회원정보 및 임시정지 -->
+   <select id="totalStopRecord" resultType="int">
+      select count(r.userid) from registerinfo r join temp_stop t on r.userid=t.userid
+      <if test="searchWord2!=null">
+         and ${searchKey2} like '%${searchWord2}%'
+      </if> 
+   </select>
+   <select id="pageStopSelect" resultType="com.t09ether.home.dto.RegisterDTO">
+   select * from
+      (select * from
+         (
+            select r.username, r.userid, r.tel, r.email, r.rank, to_char(t.writedate,'MM-DD HH:MI') writedate, r.report 
+            from registerinfo r join temp_stop t on r.userid=t.userid
+            <if test="searchWord2!=null">
+               and ${searchKey2} like '%${searchWord2}%' 
+            </if>
+            order by writedate desc 
+         )
+      <![CDATA[ 
+           where rownum<=${nowPage2*onePageRecord2} order by writedate asc 
+           ]]>
+           )
+           
+        <choose>
+           <when test="nowPage2!=totalPage2">   
+              <![CDATA[
+              where rownum<=${onePageRecord2} order by writedate desc 
+              ]]>
+           </when>
+           <when test="nowPage2==totalPage2">
+              <![CDATA[
+              where rownum<=${lastPageRecord2} order by writedate desc 
+              ]]>           
+           </when>
+        </choose>
+   </select>
+   <insert id="tempStopInsert">
+      <foreach item="item" collection="list" open="insert all" separator=" " close="select * from dual">
+         into temp_stop (tempStop, writedate, userid) values(1, sysdate, #{item})
+      </foreach>
+   </insert>
+   <delete id="tempStopDel">
+      delete from temp_stop
+      <foreach item="item" collection="list" open="where userid in (" separator=", " close=")">
+         #{item}
+      </foreach>
+   </delete>
+   
+   <!-- 신고관리 -->
+   <select id="totalReportRecord" resultType="int">
+      select count(report_no) totalRecord from report
+      <if test="searchWord!=null">
+         where ${searchKey} like '%${searchWord}%'
+      </if> 
+   </select>
+   <select id="pageReportSelect" resultType="com.t09ether.home.dto.ReportDTO">
+   select * from
+      (select * from
+         (
+            select r.report_no, r.mem_id, r.target_id, r.report_content, to_char(r.writedate,'MM-DD HH:MI') writedate, u.report 
+            from report r join registerinfo u on r.target_id = u.userid
+               <if test="searchWord!=null"> 
+                  and ${searchKey} like '%${searchWord}%'
+               </if>
+               order by writedate desc)
+      
+            <![CDATA[
+            where rownum<=${onePageRecord*nowPage} order by writedate asc
+            ]]>
+            )
+            <choose>  
+               <when test="nowPage != totalPage">
+                  <![CDATA[
+                  where rownum<=${onePageRecord} order by writedate desc
+                  ]]>
+               </when>
+               <when test="nowPage == totalPage">
+                  <![CDATA[
+                  where rownum<=${lastPageRecord} order by writedate desc
+                  ]]>
+               </when>
+               
+            </choose>
+   </select>
+   <delete id="reportDel">
+      delete from report
+      <foreach item="item" collection="list" open="where report_no in (" separator=", " close=")">
+         #{item}
+      </foreach>
+   </delete>
+   <select id="targetSelect" resultType="String">
+      select target_id from report
+      <foreach item="item" collection="list" open="where report_no in (" separator=", " close=")">
+         #{item}
+      </foreach>
+   </select>
+   <update id="targetUpdate">
+      update registerinfo set report=report+1 where userid=#{userid}
+   </update>
+
+
+   <select id="csPageSelect" resultType="com.t09ether.home.dto.CustomerCenterDTO">
+      select * from
+         (select * from
+            (select cus_b_num, category , subject, userid, to_char(writedate,'YY-MM-DD HH:MI') writedate
+                from cus_center 
+                <if test="searchWord!=null"> <!-- 검색어가 있을 경우 -->
+                   where ${searchKey} like '%${searchWord}%'
+                </if>
+                order by cus_b_num desc
+            )
+         
+               <![CDATA[
+               where rownum<=${onePageRecord*nowPage} order by cus_b_num asc
+               ]]>
+               ) 
+               <choose>
+                  <when test="nowPage!=totalPage">
+                     <![CDATA[
+                     where rownum<=${onePageRecord} order by cus_b_num desc
+                     ]]>
+                  </when>
+                  <when test="nowPage==totalPage">
+                     <![CDATA[
+                     where rownum<=${lastPageRecord} order by cus_b_num desc
+                     ]]>
+                  </when>
+               </choose>
+   </select>
+   
+   <select id="csBoardSelect" resultType="com.t09ether.home.dto.CustomerCenterDTO"> <!-- 여기서 b.userid지움 -->
+      select cus_b_num, category, c.subject, c.content, r.userid, to_char(c.writedate, 'YY-MM-DD HH:MI') writedate
+      from cus_center c join registerinfo r on c.userid=r.userid
+      and c.cus_b_num=${param1}
+   </select>
+   
+   <select id="csBoardEditSelect" resultType="com.t09ether.home.dto.CustomerCenterDTO">
+      select cus_b_num, category, subject, content from cus_center where cus_b_num=${param1}
+   </select>
+   
+   <update id="csBoardUpdate" parameterType="com.t09ether.home.dto.CustomerCenterDTO">
+      update cus_center set subject=#{subject}, category=#{category}, content=#{content} where cus_b_num=${cus_b_num} and userid=#{userid}
+   </update>
+   <delete id="csBoardDelete">
+      delete from cus_center where cus_b_num=${cus_b_num} and userid=#{userid}
+   </delete>
+   <select id="totalOffRecord" resultType="int">
+      select count(off_no) totalRecord from off_gb      
+   </select>
+   <select id="offList" resultType="com.t09ether.home.dto.OfflineDTO">
+      select * from   
+         (select * from
+            (
+                select b.off_no, b.userid, b.off_subject, b.off_content, b.location, b.current_num,
+                b.group_num, to_char(b.app_time, 'MM-DD') app_time, to_char(b.deaddate, 'MM-DD') deaddate, 
+                r.username, b.off_hit, to_char(b.writedate,'MM-DD') writedate , b.status 
+                from off_gb b join registerinfo r on b.userid=r.userid 
+                <if test="searchWord != null"><!-- 검색어가 있을 경우 -->
+                   and ${searchKey} like '%${searchWord}%'
+                </if>
+                order by b.off_no desc)      
+            <![CDATA[
+            where rownum <= ${onePageRecord * nowPage} order by off_no asc
+            ]]>
+          )
+      <choose>   
+         <when test="nowPage!=totalPage">
+         <![CDATA[
+         where rownum<=${onePageRecord} order by off_no desc 
+         ]]>
+         </when>
+         <when test="nowPage==totalPage">
+         <![CDATA[
+         where rownum<=${lastPageRecord} order by off_no desc 
+         ]]>
+         </when>
+      </choose>
+   </select>
+   <delete id="adOfflineMultiDelete">   
+      delete from off_gb
+      <foreach item="item" collection="list" open="where off_no in (" separator=", " close=")">
+         #{item}
+      </foreach> 
+   </delete>
+</mapper>

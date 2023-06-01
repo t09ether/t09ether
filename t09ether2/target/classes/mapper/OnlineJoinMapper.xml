@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.t09ether.home.dao.OnlineJoinDAO">
+	<select id="locationListSelect" resultType="com.t09ether.home.dto.OrderDTO">
+ 		select shareaddr, sharedetail, rest_count, on_no, userid
+		from product_detail where pro_code = ${pro_code} and rest_count != 0 and status=1
+ 	</select>
+ 	<select id="getList" resultType="com.t09ether.home.dto.OrderDTO">
+		select shareaddr, sharedetail, rest_count, on_no, userid
+		from product_detail where pro_code = ${pro_code} and rest_count != 0 and status=1
+		<if test="searchWrd != null">
+			and
+		    shareaddr like '%${searchWrd}%' 
+		</if>
+	</select>
+	<select id="getSearchList" resultType="com.t09ether.home.dto.OrderDTO">
+		select shareaddr, sharedetail, rest_count, on_no, userid
+		from product_detail where pro_code = ${pro_code} and rest_count != 0 and status=1
+		<if test="searchWrd != null">
+		and shareaddr like '%${searchWrd}%' 
+		</if>
+	</select>
+	<select id="proInfor" resultType="com.t09ether.home.dto.ProductDTO">
+		SELECT pro_code, pro_name, pro_price, pro_total, image
+ 		from product 
+        where pro_code = ${pro_code}
+	</select>
+	<select id="userInfor" resultType="com.t09ether.home.dto.OrderDTO">
+		Select username, tel, email, rank from registerinfo where userid=#{userid}	
+	</select>
+	<insert id="orderInsert">
+		<selectKey keyProperty="ord_no" resultType="int" order="AFTER">
+         select ord_no_sq.currval from dual
+    	</selectKey>
+	 	insert into order09(ord_no, pro_code, userid, ord_count, status, on_no, ord_amount) values(ord_no_sq.nextval, #{pro_code}, #{userid}, #{ord_count}, 1, #{on_no}, #{ord_amount})
+	</insert>
+	<update id="restUpdate">
+		update product_detail set rest_count = ${rest_count} where on_no=${on_no}
+		
+	</update>
+	<update id="statusUpdate">
+		update product_detail set status=2 where on_no=${on_no}
+	</update> 
+	<select id="selectInfor" resultType="com.t09ether.home.dto.OrderDTO">
+		select r.userid, r.username, r.tel, r.email from registerinfo r join order09 o on r.userid=o.userid and o.on_no=${on_no}
+	</select>
+	<update id="updatePrice">
+		update order09 set ord_amount=#{finalNum} where ord_no=#{ord_no}
+	</update>
+</mapper>

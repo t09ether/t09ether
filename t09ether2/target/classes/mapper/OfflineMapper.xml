@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.t09ether.home.dao.OfflineDAO">
+	<insert id="offlineInsert">
+		insert into	off_gb(off_no, userid, off_subject, off_content, location, group_num, current_num, app_time, deaddate, off_hit, writedate, status)
+		values(off_no_sq.nextval,#{userid},#{off_subject},#{off_content},
+		#{location},${group_num},${current_num},to_date(#{app_time},'MM-DD'),to_date(#{deaddate},'MM-DD'),${off_hit}, sysdate, 1)
+		<selectKey keyProperty="off_no" resultType="int" order="AFTER">
+			select off_no_sq.currval from dual
+		</selectKey>
+	</insert>
+	<select id="totalRecord" resultType="int">
+		select count(off_no) totalRecord from off_gb		
+	</select>
+	<select id="offList" resultType="com.t09ether.home.dto.OfflineDTO">
+		select * from	
+			(select * from
+				(
+					 select b.off_no, b.userid, b.off_subject, b.off_content, b.location, b.current_num,
+					 b.group_num, to_char(b.app_time, 'MM-DD') app_time, to_char(b.deaddate, 'MM-DD') deaddate, 
+					 r.username, b.off_hit, to_char(b.writedate,'MM-DD') writedate , b.status 
+					 from off_gb b join registerinfo r on b.userid=r.userid 
+					 <if test="searchWord != null"><!-- 검색어가 있을 경우 -->
+					 	and ${searchKey} like '%${searchWord}%'
+					 </if>
+					 order by b.off_no desc)		
+				<![CDATA[
+				where rownum <= ${onePageRecord * nowPage} order by off_no asc
+				]]>
+			 )
+		<choose>	
+			<when test="nowPage!=totalPage">
+			<![CDATA[
+			where rownum<=${onePageRecord} order by off_no desc 
+			]]>
+			</when>
+			<when test="nowPage==totalPage">
+			<![CDATA[
+			where rownum<=${lastPageRecord} order by off_no desc 
+			]]>
+			</when>
+		</choose>
+	</select>
+	<select id="offlineSelect" resultType="com.t09ether.home.dto.OfflineDTO">
+		select off_no, userid, off_subject, off_content, location, group_num, current_num, to_char(app_time, 'MM-DD') app_time, to_char(deaddate,'MM-DD') deaddate, off_hit, to_char(writedate,'MM-DD HH:MI')writedate, status
+		from off_gb where off_no=${param1}
+	</select>
+	<update id="offlineHitCount">
+		update off_gb set off_hit = off_hit + 1 where off_no=${param1}
+	</update>
+	<select id="offlineEditSelect" resultType="com.t09ether.home.dto.OfflineDTO">
+		select * from off_gb where off_no=${param1}
+	</select>
+	<update id="offlineUpdate" parameterType="com.t09ether.home.dto.OfflineDTO">
+		update off_gb set off_subject=#{off_subject},off_content=#{off_content},group_num=#{group_num} where off_no=${off_no} and userid=#{userid}
+	</update>
+	<delete id="offlineDelete">
+		delete from off_gb where off_no = ${off_no} and userid=#{userid}
+	</delete>
+	<select id="getParticipant" resultType="com.t09ether.home.dto.RegisterDTO">
+		select * from registerinfo where userid = #{param1}
+	</select>
+	<insert id="participantInsert">
+		insert into off_participant(off_j_no, off_no, userid, username, tel)
+		values (off_j_no_sq.nextval, #{off_no}, #{userid}, #{username}, #{tel})
+	</insert>
+	<select id="participantList" resultType="com.t09ether.home.dto.OfflineParticipantDTO">
+		select * from off_participant where off_no=${param1}
+	</select>
+	<select id="currentNumCount" resultType="int">
+		select count(userid) num from off_participant where off_no=${param1}
+	</select>
+	<select id="getIds" resultType="String">
+		select userid from off_participant where off_no=${param1}
+	</select>
+	<update id="offlineClose">
+		update off_gb set status=2 where off_no=${param1}
+	</update>
+    <update id="currentNumUpdate" parameterType="int">
+    	update off_gb set current_num = (select count(*) from off_participant where off_no = ${param1}) where off_no=${param1}
+    </update>
+    
+</mapper>

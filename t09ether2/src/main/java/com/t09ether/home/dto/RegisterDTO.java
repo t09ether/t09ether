@@ -1,0 +1,159 @@
+package com.t09ether.home.dto;
+
+import java.util.List;
+
+public class RegisterDTO {
+	
+	private int rownum;
+	
+	private String userid;
+	private String userpwd;
+	private String username;
+	
+	private String tel;
+	private String tel1;
+	private String tel2;
+	private String tel3;
+	
+	private String email;
+	private String zipcode;
+	private String addr;
+	private String addrdetail;
+	private int rank;
+	private String writedate;
+	private int report;
+	private int exp;
+
+	
+	//여러개의 레코드 한번에 삭제할때 필요한 레코드 번호
+	private List<String> noList;
+		
+	@Override
+	public String toString() {
+		return "RegisterDTO [rownum=" + rownum + ", userid=" + userid + ", userpwd=" + userpwd + ", username="
+				+ username + ", tel=" + tel + ", tel1=" + tel1 + ", tel2=" + tel2 + ", tel3=" + tel3 + ", email="
+				+ email + ", zipcode=" + zipcode + ", addr=" + addr + ", addrdetail=" + addrdetail + ", rank=" + rank
+				+ ", writedate=" + writedate + ", report=" + report + ", exp=" + exp + "]";
+	}
+
+
+	public int getRownum() {
+		return rownum;
+	}
+	public void setRownum(int rownum) {
+		this.rownum = rownum;
+	}
+	public String getUserid() {
+		return userid;
+	}
+	public void setUserid(String userid) {
+		this.userid = userid;
+	}
+	public String getUserpwd() {
+		return userpwd;
+	}
+	public void setUserpwd(String userpwd) {
+		this.userpwd = userpwd;
+	}
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	public String getTel() {
+		tel = tel1 + "-" + tel2 + "-" + tel3;
+		return tel;
+	}
+	public String getTelAst() {
+		tel = tel1 + "-" + "****" + "-" + tel3;
+		return tel;
+	}
+	public String getNHTel() {
+		tel = tel1 + tel2 + tel3;
+		return tel;
+	}
+	public void setTel(String tel) {
+		this.tel = tel;
+		
+		String telSplit[] = tel.split("-");
+		tel1 = telSplit[0];
+		tel2 = telSplit[1];
+		tel3 = telSplit[2];
+	}
+	public String getTel1() {
+		return tel1;
+	}
+	public void setTel1(String tel1) {
+		this.tel1 = tel1;
+	}
+	public String getTel2() {
+		return tel2;
+	}
+	public void setTel2(String tel2) {
+		this.tel2 = tel2;
+	}
+	public String getTel3() {
+		return tel3;
+	}
+	public void setTel3(String tel3) {
+		this.tel3 = tel3;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getZipcode() {
+		return zipcode;
+	}
+	public void setZipcode(String zipcode) {
+		this.zipcode = zipcode;
+	}
+	public String getAddr() {
+		return addr;
+	}
+	public void setAddr(String addr) {
+		this.addr = addr;
+	}
+	public String getAddrdetail() {
+		return addrdetail;
+	}
+	public void setAddrdetail(String addrdetail) {
+		this.addrdetail = addrdetail;
+	}
+	public int getRank() {
+		return rank;
+	}
+	public void setRank(int rank) {
+		this.rank = rank;
+	}
+	public String getWritedate() {
+		return writedate;
+	}
+	public void setWritedate(String writedate) {
+		this.writedate = writedate;
+	}
+	public int getReport() {
+		return report;
+	}
+	public void setReport(int report) {
+		this.report = report;
+	}
+	public int getExp() {
+		return exp;
+	}
+	public void setExp(int exp) {
+		this.exp = exp;
+	}
+	public List<String> getNoList() {
+		return noList;
+	}
+	public void setNoList(List<String> noList) {
+		this.noList = noList;
+	}
+	
+	
+	
+}

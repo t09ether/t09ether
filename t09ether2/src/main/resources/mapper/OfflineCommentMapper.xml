@@ -10,7 +10,7 @@
  	</select>
  	<insert id="commentInsert">
  		insert into comment09(comment_no, off_no, comment09, userid)
- 		values((comment_no_sq.nextval), #{off_no},#{comment09},#{userid})
+ 		select case count(*) when 0 then 1 else max(pro_code) + 1 end, #{off_no},#{comment09},#{userid} from comment09
  	</insert>
  	<update id="commentUpdate">
  		update comment09 set comment09=#{comment09}

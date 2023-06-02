@@ -133,6 +133,7 @@ public class AdminController {
 		//
 		
 		//온라인 인기상품
+		/*
 		List<DataVO> onPopList = service.onPopStat();
 		
 		Gson onPopGson = new Gson();
@@ -152,8 +153,8 @@ public class AdminController {
 		
 		String onPopJson = onPopGson.toJson(onPopjArray);
 		mav.addObject("onPopJson", onPopJson);
-		//
 		
+		*/
 		///			
 		
 		List<RegisterDTO> list = service.userSelect();

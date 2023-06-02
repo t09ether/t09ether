@@ -4,7 +4,7 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.t09ether.home.dao.ProductDAO">
 	<insert id="productInsert">
-		insert into product(pro_code, pro_total, pro_name, pro_price, pro_stock, image, detailed) values(pro_code_sq.nextval, #{pro_total}, #{pro_name},#{pro_price}, #{pro_stock}, #{image}, #{detailed})
+		insert into product(pro_code, pro_total, pro_name, pro_price, pro_stock, image, detailed) select case count(*) when 0 then 1 else max(pro_code) + 1 end, #{pro_total}, #{pro_name},#{pro_price}, #{pro_stock}, #{image}, #{detailed} from product
 	</insert>
 	<select id="totalRecord" resultType="int">
 		select count(pro_code) from product 

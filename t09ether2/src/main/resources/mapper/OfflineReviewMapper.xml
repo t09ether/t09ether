@@ -5,10 +5,10 @@
 <mapper namespace="com.t09ether.home.dao.OfflineReviewDAO">
 	<insert id="offlineReviewInsert">
 		insert into off_review (off_r_no, off_no, userid, target_id, subject, content, writedate)
-		values (off_r_no_sq.nextval, ${off_no}, #{userid},#{target_id},#{subject},#{content},sysdate)
+		select case count(*) when 0 then 1 else max(off_r_no) + 1 end, ${off_no}, #{userid},#{target_id},#{subject},#{content},now() from off_review
 	</insert>
 	<select id="reviewSelect" resultType="com.t09ether.home.dto.OfflineReviewDTO">
-		select off_r_no, off_no, userid, target_id, subject, content, DATE_FORMAT(now(), '%m%d') writedate
+		select off_r_no, off_no, userid, target_id, subject, content, DATE_FORMAT(now(), '%m-%d') writedate
 		from off_review where target_id=#{userid}
 	</select>
 	<select id="reviewCount" resultType="int">

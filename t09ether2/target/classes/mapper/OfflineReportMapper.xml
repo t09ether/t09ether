@@ -5,6 +5,6 @@
 <mapper namespace="com.t09ether.home.dao.OfflineReportDAO">
 	<insert id="offlineReportInsert">
 		insert into report(report_no, mem_id, target_id, report_content, writedate, target_type)
-		values(report_no_sq.nextval, #{mem_id}, #{target_id}, #{report_content}, sysdate, ${target_type})
+		select case count(*) when 0 then 1 else max(report_no) + 1 end, #{mem_id}, #{target_id}, #{report_content}, now(), ${target_type} from report
 	</insert>
 </mapper>

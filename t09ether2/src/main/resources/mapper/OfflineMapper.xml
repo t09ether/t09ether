@@ -5,46 +5,28 @@
 <mapper namespace="com.t09ether.home.dao.OfflineDAO">
 	<insert id="offlineInsert">
 		insert into	off_gb(off_no, userid, off_subject, off_content, location, group_num, current_num, app_time, deaddate, off_hit, writedate, status)
-		values(off_no_sq.nextval,#{userid},#{off_subject},#{off_content},
-		#{location},${group_num},${current_num},to_date(#{app_time},'MM-DD'),to_date(#{deaddate},'MM-DD'),${off_hit}, sysdate, 1)
+		 select case count(*) when 0 then 1 else max(off_no) + 1 end ,#{userid},#{off_subject},#{off_content},
+		#{location},${group_num},${current_num},DATE_FORMAT(#{app_time}, '%m-%d'),DATE_FORMAT(#{deaddate}, '%m-%d'),${off_hit}, now(), 1 from off_gb
 		<selectKey keyProperty="off_no" resultType="int" order="AFTER">
-			select off_no_sq.currval from dual
+			SELECT LAST_INSERT_ID()
 		</selectKey>
 	</insert>
 	<select id="totalRecord" resultType="int">
 		select count(off_no) totalRecord from off_gb		
 	</select>
 	<select id="offList" resultType="com.t09ether.home.dto.OfflineDTO">
-		select * from	
-			(select * from
-				(
-					 select b.off_no, b.userid, b.off_subject, b.off_content, b.location, b.current_num,
-					 b.group_num, to_char(b.app_time, 'MM-DD') app_time, to_char(b.deaddate, 'MM-DD') deaddate, 
-					 r.username, b.off_hit, to_char(b.writedate,'MM-DD') writedate , b.status 
-					 from off_gb b join registerinfo r on b.userid=r.userid 
-					 <if test="searchWord != null"><!-- 검색어가 있을 경우 -->
-					 	and ${searchKey} like '%${searchWord}%'
-					 </if>
-					 order by b.off_no desc)		
-				<![CDATA[
-				where rownum <= ${onePageRecord * nowPage} order by off_no asc
-				]]>
-			 )
-		<choose>	
-			<when test="nowPage!=totalPage">
-			<![CDATA[
-			where rownum<=${onePageRecord} order by off_no desc 
-			]]>
-			</when>
-			<when test="nowPage==totalPage">
-			<![CDATA[
-			where rownum<=${lastPageRecord} order by off_no desc 
-			]]>
-			</when>
-		</choose>
+		 select b.off_no, b.userid, b.off_subject, b.off_content, b.location, b.current_num,
+		 b.group_num, DATE_FORMAT(b.app_time, '%m-%d') app_time, DATE_FORMAT(b.deaddate, '%m-%d') deaddate, 
+		 r.username, b.off_hit, DATE_FORMAT(b.writedate, '%m-%d') writedate , b.status 
+		 from off_gb b join registerinfo r on b.userid=r.userid 
+		 <if test="searchWord != null"><!-- 검색어가 있을 경우 -->
+		 	and ${searchKey} like '%${searchWord}%'
+		 </if>
+		 order by b.off_no desc		
+		 LIMIT #{limitStart}, #{onePageRecord}
 	</select>
 	<select id="offlineSelect" resultType="com.t09ether.home.dto.OfflineDTO">
-		select off_no, userid, off_subject, off_content, location, group_num, current_num, to_char(app_time, 'MM-DD') app_time, to_char(deaddate,'MM-DD') deaddate, off_hit, to_char(writedate,'MM-DD HH:MI')writedate, status
+		select off_no, userid, off_subject, off_content, location, group_num, current_num, DATE_FORMAT(app_time, '%m-%d') app_time, DATE_FORMAT(deaddate, '%m-%d') deaddate, off_hit, DATE_FORMAT(writedate, '%m-%d') writedate, status
 		from off_gb where off_no=${param1}
 	</select>
 	<update id="offlineHitCount">
@@ -64,7 +46,7 @@
 	</select>
 	<insert id="participantInsert">
 		insert into off_participant(off_j_no, off_no, userid, username, tel)
-		values (off_j_no_sq.nextval, #{off_no}, #{userid}, #{username}, #{tel})
+		select case count(*) when 0 then 1 else max(off_j_no) + 1 end, #{off_no}, #{userid}, #{username}, #{tel} from off_participant
 	</insert>
 	<select id="participantList" resultType="com.t09ether.home.dto.OfflineParticipantDTO">
 		select * from off_participant where off_no=${param1}

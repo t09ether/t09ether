@@ -6,7 +6,7 @@ public class OnlinePagingVO {
     private int onePageNumCount;         // 화면 하단에 출력할 페이지 사이즈 pageSize
    
     private String searchWord;       // 검색 키워드 keyword
-    private String searchkey;    // 검색 유형 searchType
+    private String searchKey;    // 검색 유형 searchType
 
     public OnlinePagingVO() {
         this.nowPage = 1;
@@ -151,12 +151,12 @@ public class OnlinePagingVO {
 		this.searchWord = searchWord;
 	}
 
-	public String getSearchkey() {
-		return searchkey;
+	public String getSearchKey() {
+		return searchKey;
 	}
 
-	public void setSearchkey(String searchkey) {
-		this.searchkey = searchkey;
+	public void setSearchKey(String searchkey) {
+		this.searchKey = searchKey;
 	}
 
 

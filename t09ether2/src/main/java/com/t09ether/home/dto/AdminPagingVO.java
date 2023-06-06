@@ -20,7 +20,8 @@ public class AdminPagingVO {
 	
 	private int totalRecord; // 총 레코드 수
 	private int totalPage; // 총 페이지 수
-	private int startPageNum = 1;
+	private int startPageNum = 1; //첫페이지번호
+	
 	
 	private int endPageNum;//끝페이지번호 endPage
    private int limitStart;           // LIMIT 시작 위치 
@@ -40,6 +41,7 @@ public class AdminPagingVO {
 		//출력할 페이지 시작번호를 계산
 		//((현재페이지-1)/표시할 페이지수)*표시할페이지수+1
 		startPageNum = ((nowPage-1)/onePageNumCount)*onePageNumCount+1;
+		limitStart = (nowPage - 1) * onePageRecord;
 	}
 
 	public int getOnePageRecord() {

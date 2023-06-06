@@ -93,6 +93,7 @@ public class AdminOrderPagingVO {
 		//출력할 페이지 시작 번호를 계산
 		//((현재 페이지-1)/표시할 페이지 수)*표시할 페이수 + 1
 		startPageNum2 = ((nowPage2-1)/onePageNumCount2)*onePageNumCount2+1;
+		limitStart2 = (nowPage2 - 1) * onePageRecord2;
 		
 	}
 	

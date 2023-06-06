@@ -8,7 +8,7 @@
 		 select case count(*) when 0 then 1 else max(off_no) + 1 end ,#{userid},#{off_subject},#{off_content},
 		#{location},${group_num},${current_num},DATE_FORMAT(#{app_time}, '%m-%d'),DATE_FORMAT(#{deaddate}, '%m-%d'),${off_hit}, now(), 1 from off_gb
 		<selectKey keyProperty="off_no" resultType="int" order="AFTER">
-			SELECT LAST_INSERT_ID()
+			SELECT MAX(off_no)+1 FROM off_gb
 		</selectKey>
 	</insert>
 	<select id="totalRecord" resultType="int">

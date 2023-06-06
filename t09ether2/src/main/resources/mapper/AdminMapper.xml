@@ -123,9 +123,8 @@
          where ${searchKey} like concat('%', #{searchWord}, '%')
       </if> 
    </select>
-
    <select id="pageProductSelect" resultType="com.t09ether.home.dto.ProductDTO">
-      select pro_code, pro_name, pro_price, pro_stock, image, detailed, pro_total
+	select pro_code, pro_name, pro_price, pro_stock, image, detailed, pro_total
       from product
       <if test="searchWord!=null"> 
          where ${searchKey} like concat('%', #{searchWord}, '%')

@@ -30,12 +30,11 @@
 		userid=#{userid} and userpwd=#{userpwd}
 	</update>
 	<select id="idSearchOk" resultType="String">
-      select replace(userid,substr(userid,4,5),'*****') from registerinfo where username=#{param1} and email = #{param2}
-   </select>
-   <select id="pwdSearch" resultType="String">
-      select userpwd from registerinfo where userid=#{param1} and email=#{param2} 
-   </select>
-	
+		select replace(userid,substr(userid,4,5),'*****') from registerinfo where username=#{param1} and email = #{param2}
+	</select>
+	<select id="pwdSearch" resultType="String">
+		select userpwd from registerinfo where userid=#{param1} and email=#{param2} 
+	</select>
 	<select id="rSelect" resultType="com.t09ether.home.dto.RegisterDTO">
 		select * from registerinfo where userid=#{userid}
 	</select>

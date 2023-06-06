@@ -133,6 +133,7 @@ public class AdminController {
 		//
 		
 		//온라인 인기상품
+		/*
 		List<DataVO> onPopList = service.onPopStat();
 		
 		Gson onPopGson = new Gson();
@@ -152,8 +153,8 @@ public class AdminController {
 		
 		String onPopJson = onPopGson.toJson(onPopjArray);
 		mav.addObject("onPopJson", onPopJson);
-		//
 		
+		*/
 		///			
 		
 		List<RegisterDTO> list = service.userSelect();
@@ -417,10 +418,10 @@ public class AdminController {
 		ModelAndView mav = new ModelAndView();
 		//총레코드수 구하기
 		vo.setTotalRecord(service.totalProductRecord(vo));
-		
+
 		//해당페이지 레코드 선택하기
 		mav.addObject("list", service.pageProductSelect(vo)); //list정보도 뷰페이지에서 사용하게
-		
+		System.out.println("nowpage;"+vo.getNowPage()+"limitstart; "+vo.getLimitStart());
 		mav.addObject("vo",vo); //페이지 정보를 뷰페이지로 갖고가게
 		mav.setViewName("admin/adProduct");
 		return mav;

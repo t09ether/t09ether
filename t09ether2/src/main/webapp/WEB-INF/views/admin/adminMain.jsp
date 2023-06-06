@@ -237,7 +237,7 @@
 	});
 	
 	//온라인 인기 상품
-	var labelList3 = new Array();
+	/*var labelList3 = new Array();
 	var valueList3 = new Array();
 	var colorList3 = new Array();
 	
@@ -256,11 +256,11 @@
 				labels: labelList3,
 				datasets: [{
 						data : valueList3,
-						backgroundColor: colorList3/*,
-						label: '온라인 상품별 거래량',
-						fill:false,
-						borderColor:'rgb(138, 74, 88)',
-						tension:0.1  */	
+						backgroundColor: colorList3,
+						//label: '온라인 상품별 거래량',
+						//fill:false,
+						//borderColor:'rgb(138, 74, 88)',
+						//tension:0.1 
 				}],
 				options : {
 						title : {
@@ -275,5 +275,5 @@
 		      type: 'doughnut',
 			  data: data
 	});
-	
+	 */	
 </script>

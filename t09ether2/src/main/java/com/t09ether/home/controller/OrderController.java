@@ -51,7 +51,7 @@ public class OrderController {
       //상품등록 실패하면 예외발생
       try {
          service.onlineInsert(odto);
-         int on_no = odto.getOn_no() - 1;
+         int on_no = odto.getOn_no();
          System.out.println(on_no);
          dto.setOn_no(on_no);
          service.orderInsert(dto);

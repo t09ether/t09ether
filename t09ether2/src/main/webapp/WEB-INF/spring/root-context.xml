@@ -9,10 +9,10 @@
 	
 	<!-- db서버의 정보를 이용하여 dataSource객체를 생성한다 -->
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<property name="driverClassName" value="com.mysql.cj.jdbc.Driver"></property>
-		<property name="url" value="jdbc:mysql://127.0.0.1:3306/together"></property>
-		<property name="username" value="root"></property>
-		<property name="password" value="apfdhdtiger"></property>
+		<property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
+		<property name="url" value="jdbc:mysql://localhost:3306/t09ether"/>
+		<property name="username" value="test"/>
+		<property name="password" value="1234"/>
 	</bean>
 	<!-- dataSource객체를 이용하여 SqlSessionFactory객체를 생성한다 -->
 	<bean id="SqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">

@@ -4,19 +4,17 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.t09ether.home.dao.OrderDAO">
    <insert id="onlineInsert" parameterType="com.t09ether.home.dto.OnlineDTO">
-      <selectKey keyProperty="on_no" resultType="int" order="AFTER">
-         SELECT on_no_sq.nextval FROM dual
+       insert into product_detail(on_no, pro_code, userid, on_count, hit, shareaddr, sharedetail, rest_count, status) select case count(*) when 0 then 1 else max(on_no) + 1 end, #{pro_code}, #{userid}, #{on_count}, 0, #{shareaddr}, #{sharedetail}, #{rest_count}, 1 from product_detail
+       <selectKey keyProperty="on_no" resultType="int" order="AFTER">
+       	select MAX(on_no) from product_detail
       </selectKey>
-       insert into product_detail(on_no, pro_code, userid, on_count, hit, shareaddr, sharedetail, rest_count, status) values(on_no_sq.nextval, #{pro_code}, #{userid}, #{on_count}, 0, #{shareaddr}, #{sharedetail}, #{rest_count}, 1)
    </insert>
-   
-   
    <insert id="orderInsert">
-       insert into order09(ord_no, pro_code, userid, ord_count, status, on_no, ord_amount) values(ord_no_sq.nextval, #{pro_code}, #{userid}, #{ord_count}, 1, #{on_no}, #{ord_amount})
+       insert into order09(ord_no, pro_code, userid, ord_count, status, on_no, ord_amount) select case count(*) when 0 then 1 else max(ord_no) + 1 end, #{pro_code}, #{userid}, #{ord_count}, 1, #{on_no}, #{ord_amount} from order09
    </insert>
    
    <select id="orderSelect" resultType="com.t09ether.home.dto.OrderDTO">
-      select r.username, r.tel, r.email, r.zipcode, r.addr, r.addrdetail, r.rank, o.userid, o.pro_code, o.pro_name, o.pro_price, o.image, o.pro_total, o.ord_no, o.ord_amount, o.ord_count, o.status, o.on_no from registerinfo r join (select p.pro_code, p.pro_name, p.pro_price, p.image, p.pro_total, o.ord_no, o.userid, o.ord_count, o.status, o.ord_amount, o.on_no from order09 o join product p on o.pro_code=p.pro_code and o.pro_code=#{pro_code} and o.on_no=#{on_no}) o on r.userid=o.userid and o.userid=#{userid} 
+      select r.username, r.tel, r.email, r.zipcode, r.addr, r.addrdetail, r.ranking, o.userid, o.pro_code, o.pro_name, o.pro_price, o.image, o.pro_total, o.ord_no, o.ord_amount, o.ord_count, o.status, o.on_no from registerinfo r join (select p.pro_code, p.pro_name, p.pro_price, p.image, p.pro_total, o.ord_no, o.userid, o.ord_count, o.status, o.ord_amount, o.on_no from order09 o join product p on o.pro_code=p.pro_code and o.pro_code=#{pro_code} and o.on_no=#{on_no}) o on r.userid=o.userid and o.userid=#{userid} 
    </select>
    <delete id="orderDelete">
 		delete from order09 where ord_no=${ord_no}

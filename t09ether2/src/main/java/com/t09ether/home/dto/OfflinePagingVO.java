@@ -15,6 +15,38 @@ public class OfflinePagingVO {
 		private String searchKey;
 		private String searchWord;
 		
+		//페이징 변수
+		private int endPageNum;
+		private int limitStart;
+		
+		@Override
+		public String toString() {
+			return "OfflinePagingVO [nowPage=" + nowPage + ", onePageRecord=" + onePageRecord + ", totalRecord="
+					+ totalRecord + ", totalPage=" + totalPage + ", lastPageRecord=" + lastPageRecord
+					+ ", onePageNumCount=" + onePageNumCount + ", startPageNum=" + startPageNum + ", searchKey="
+					+ searchKey + ", searchWord=" + searchWord + ", endPageNum=" + endPageNum + ", limitStart="
+					+ limitStart + "]";
+		}
+
+		public int getEndPageNum() {
+			return endPageNum;
+		}
+		
+		public void setEndPageNum(int endPageNum) {
+			this.endPageNum = endPageNum;
+			endPageNum = startPageNum + onePageNumCount - 1;
+			if (endPageNum > totalRecord) {
+	            endPageNum = totalRecord;
+	        }
+		}
+		
+		public int getLimitStart() {
+			return limitStart;
+		}
+		public void setLimitStart(int limitStart) {
+			this.limitStart = limitStart;
+			limitStart = (nowPage - 1) * onePageRecord;
+		}
 		public int getNowPage() {
 			return nowPage;
 		}
@@ -86,11 +118,5 @@ public class OfflinePagingVO {
 		public void setSearchWord(String searchWord) {
 			this.searchWord = searchWord;
 		}
-		@Override
-		public String toString() {
-			return "OfflinePagingVO [nowPage=" + nowPage + ", onePageRecord=" + onePageRecord + ", totalRecord="
-					+ totalRecord + ", totalPage=" + totalPage + ", lastPageRecord=" + lastPageRecord
-					+ ", onePageNumCount=" + onePageNumCount + ", startPageNum=" + startPageNum + ", searchKey="
-					+ searchKey + ", searchWord=" + searchWord + "]";
-		}
+		
 }

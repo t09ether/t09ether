@@ -12,7 +12,7 @@
 		on p.pro_code=o.pro_code
 	</select>
 	<insert id="refundInsert">
-		insert into refund(refund_no, ord_no, refund_amount, refund_count) select case count(*) when 0 then 1 else max(refund_no) + 1 end, #{ord_no}, #{amount}, #{ord_count}
+		insert into refund(refund_no, ord_no, refund_amount, refund_count) select case count(*) when 0 then 1 else max(refund_no) + 1 end, #{ord_no}, #{amount}, #{ord_count} from refund
 	</insert>
 	<delete id="payDelete">
 		delete from payment where pay_no=#{pay_no}

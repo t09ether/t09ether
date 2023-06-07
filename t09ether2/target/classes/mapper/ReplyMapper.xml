@@ -5,18 +5,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.t09ether.home.dao.ReplyDAO">
 	<insert id="replyInsert">
 	 	insert into cus_reply(reply_num, cus_b_num, userid, content)
-	 	values(reply_num_sq.nextval, #{cus_b_num}, #{userid}, #{content}) 	
+	 	select case count(*) when 0 then 1 else max(reply_num)+1 end, #{cus_b_num}, #{userid}, #{content} from cus_reply
+	 	<selectKey keyProperty="reply_num" resultType="int" order="AFTER">
+	 		select MAX(reply_num) from cus_reply
+	 	</selectKey>	
 	</insert>
+	
 	<select id="replyListSelect" parameterType="int" resultType="com.t09ether.home.dto.ReplyDTO">
-	 	select reply_num, cus_b_num, userid, content, writedate
-	 	from cus_reply where cus_b_num=${param1}
-	 	order by reply_num desc
+	 	select reply_num, cus_b_num, userid, content, writedate from cus_reply where cus_b_num=${param1} order by reply_num desc
  	</select>
+ 	
  	<update id="replyUpdate">
  		update cus_reply set content=#{content} where reply_num=#{reply_num} and userid=#{userid}
  	</update>
+ 	
  	<delete id="replyDelete">
  		delete from cus_reply where reply_num=${param1} and userid=#{param2}
- 	</delete>  
-  
+ 	</delete>
+ 	
 </mapper>

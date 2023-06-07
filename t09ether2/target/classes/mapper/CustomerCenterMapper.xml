@@ -5,21 +5,18 @@
 <mapper namespace="com.t09ether.home.dao.CustomerCenterDAO">
    <insert id="csBoardInsert">
       insert into cus_center(cus_b_num, userid, subject, content, category)
-      values(cus_b_num_sq.nextval, #{userid}, #{subject}, #{content}, #{category} )
+      select case count(*) when 0 then 1 else max(cus_b_num) +1 end, #{userid}, #{subject}, #{content}, #{category} from cus_center
+      <selectKey keyProperty="cus_b_num" resultType="int" order="AFTER">
+         select max(cus_b_num) from cus_center
+      </selectKey> 
    </insert>
-   <!-- 
-   <select id="boardList" resultType="com.t09ether.home.dto.CustomerCenterDTO">
-      select cus_b_num, userid, subject, to_char(writedate,'YY-MM-DD') writedate from cus_center order by cus_b_num desc
-   </select>
-   <select id="boardView" parameterType="java.lang.Integer" resultType="com.t09ether.home.dto.CustomerCenterDTO">
-      select cus_b_num, userid, subject, content, to_char(writedate,'YY-MM-DD') writedate from cus_center where cus_b_num = #{cus_b_num} 
-   </select>
-   -->
-   <select id="csBoardSelect" resultType="com.t09ether.home.dto.CustomerCenterDTO"> <!-- 여기서 b.userid지움 -->
-      select cus_b_num, category, c.subject, c.content, r.userid, to_char(c.writedate,'YY-MM-DD HH:MI') writedate
+
+   <select id="csBoardSelect" resultType="com.t09ether.home.dto.CustomerCenterDTO">
+      select cus_b_num, category, c.subject, c.content, r.userid, date_format(c.writedate, '%m-%d %H:%i') writedate
       from cus_center c join registerinfo r on c.userid=r.userid
       and c.cus_b_num=${param1}
    </select>
+   
    <select id="csBoardEditSelect" resultType="com.t09ether.home.dto.CustomerCenterDTO">
       select cus_b_num, category, subject, content from cus_center where cus_b_num=${param1}
    </select>
@@ -27,6 +24,7 @@
    <update id="csBoardUpdate" parameterType="com.t09ether.home.dto.CustomerCenterDTO">
       update cus_center set subject=#{subject}, category=#{category}, content=#{content} where cus_b_num=${cus_b_num} and userid=#{userid}
    </update>
+   
    <delete id="csBoardDelete">
       delete from cus_center where cus_b_num=${cus_b_num} and userid=#{userid}
    </delete>
@@ -38,31 +36,11 @@
       </if>
    </select>
    <select id="pageSelect" resultType="com.t09ether.home.dto.CustomerCenterDTO">
-      select * from
-         (select * from
-            (select cus_b_num, category ,subject, userid, to_char(writedate,'YY-MM-DD HH:MI') writedate
-                from cus_center 
-                <if test="searchWord!=null"> <!-- 검색어가 있을 경우 -->
-                   where ${searchKey} like '%${searchWord}%'
-                </if>
-                order by cus_b_num desc
-            )
-         
-               <![CDATA[
-               where rownum<=${onePageRecord*nowPage} order by cus_b_num asc
-               ]]>
-               ) 
-               <choose>
-                  <when test="nowPage!=totalPage">
-                     <![CDATA[
-                     where rownum<=${onePageRecord} order by cus_b_num desc
-                     ]]>
-                  </when>
-                  <when test="nowPage==totalPage">
-                     <![CDATA[
-                     where rownum<=${lastPageRecord} order by cus_b_num desc
-                     ]]>
-                  </when>
-               </choose>
+		select cus_b_num, category ,subject, userid, date_format(writedate, '%m-%d %H:%i') writedate from cus_center 
+		<if test="searchWord!=null"> <!-- 검색어가 있을 경우 -->
+			where ${searchKey} like concat('%', #{searchWord}, '%')
+		</if>
+		order by cus_b_num desc
+		limit #{limitStart}, #{onePageRecord}
    </select>
 </mapper>

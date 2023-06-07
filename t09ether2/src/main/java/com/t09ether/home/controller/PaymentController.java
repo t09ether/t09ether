@@ -126,11 +126,12 @@ public class PaymentController {
 
 	        // 결제 정보 조회
 	        Payment payment = iamportClient.paymentByImpUid(impUid).getResponse();
-
+	        System.out.println("payment null인지 아닌지"+payment.toString());
 	        // 결제 취소 데이터 생성
 	        CancelData cancelData = new CancelData(impUid, true); // 전액 환불
 	        cancelData.setReason(reason);
-
+	        System.out.println("cancelData null인지 아닌지"+cancelData.toString());
+	        
 	        // 결제 취소 요청
 	        IamportResponse<Payment> cancelResponse = iamportClient.cancelPaymentByImpUid(cancelData);
 

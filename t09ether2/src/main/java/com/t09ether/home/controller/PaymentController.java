@@ -100,7 +100,7 @@ public class PaymentController {
 		ModelAndView mav = new ModelAndView();
 		PaymentDTO dto = service.paymentSelect(ord_no);
 		mav.addObject("dto",dto);
-		mav.setViewName("online/payCancel");
+		mav.setViewName("/online/payCancel");
 		return mav;
 	}
 	

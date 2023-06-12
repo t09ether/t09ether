@@ -110,7 +110,7 @@ $(function(){
       let params = $("#searchForm").serialize();
       
       $.ajax({
-         url:"/home/online/searchList", //onlineController에 있어
+         url:"<%=request.getContextPath() %>/online/searchList", //onlineController에 있어
          type:"GET",      //서버서 가져온데이터
          data:params,
          success:function(searchresult){
@@ -181,7 +181,7 @@ $(function(){
                 <div class="card mb-6">
                      <div class="card-header">상품상세</div>
                      <div class="card-body" style="height:585px;padding:30px">
-                        <button class="btn btn-primary" id="button-search" style="float:right" onclick="location.href='/home/online/onlineReview?pro_code=${dto.pro_code}'">리뷰</button>
+                        <button class="btn btn-primary" id="button-search" style="float:right" onclick="location.href='<%=request.getContextPath() %>/online/onlineReview?pro_code=${dto.pro_code}'">리뷰</button>
                         <h2 class="card-title">${dto.pro_name }</h2>
                         <br/>
                         <div style="margin-left:420px;">

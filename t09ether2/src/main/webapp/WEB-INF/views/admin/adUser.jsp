@@ -131,7 +131,7 @@
 				
 				<section class="box">
 					<div class="table-wrapper">
-					<form method="post" action="/home/admin/tempStop" id="tempStopForm">
+					<form method="post" action="<%=request.getContextPath() %>/admin/tempStop" id="tempStopForm">
 					<input type="hidden" name="nowPage" value="${vo.nowPage }"/>
 					<c:if test="${vo.searchWord!=null}">
 						<input type="hidden" name="searchKey" value="${vo.searchKey }"/>
@@ -163,7 +163,7 @@
 									<td>${bDTO.userid }</td>
 									<td>${bDTO.tel }</td>
 									<td>${bDTO.email }</td>
-									<td>${bDTO.rank }</td>
+									<td>${bDTO.ranking }</td>
 									<td>${bDTO.writedate }</td>
 									<td>${bDTO.report }</td>
 								</tr>
@@ -245,7 +245,7 @@
 				
 				<section class="box">
 					<div class="table-wrapper">
-					<form method="post" action="/home/admin/unStop" id="unStopForm">
+					<form method="post" action="<%=request.getContextPath() %>/admin/unStop" id="unStopForm">
 					<input type="hidden" name="nowPage2" value="${vo2.nowPage2 }"/>
 					<c:if test="${vo2.searchWord2!=null}">
 						<input type="hidden" name="searchKey2" value="${vo2.searchKey2 }"/>
@@ -277,7 +277,7 @@
 									<td>${bDTO2.userid }</td>
 									<td>${bDTO2.tel }</td>
 									<td>${bDTO2.email }</td>
-									<td>${bDTO2.rank }</td>
+									<td>${bDTO2.ranking }</td>
 									<td>${bDTO2.writedate }</td>
 									<td>${bDTO2.report }</td>
 								</tr>

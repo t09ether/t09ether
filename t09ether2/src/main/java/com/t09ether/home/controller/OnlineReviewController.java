@@ -63,7 +63,7 @@ public class OnlineReviewController {
 		mav.addObject("list", list);
 		mav.addObject("rating", rating);
 		mav.addObject("dto", dto);
-		mav.setViewName("online/onlineReview");
+		mav.setViewName("/online/onlineReview");
 		
 		return mav;
 		

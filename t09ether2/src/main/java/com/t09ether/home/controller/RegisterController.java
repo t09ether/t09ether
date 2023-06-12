@@ -32,7 +32,7 @@ public class RegisterController {
 	// 로그인 폼으로 이동
 	@GetMapping("/loginForm")
 	public String login() {
-		return "register/loginForm";
+		return "/register/loginForm";
 	}
 	
 	// DB로그인
@@ -61,10 +61,10 @@ public class RegisterController {
 			
 		}else if(dto==null) { //실패
 			mav.addObject("msg", "존재하지 않는 아이디거나, 비밀번호 오류입니다.");
-			mav.setViewName("register/loginAlert");
+			mav.setViewName("/register/loginAlert");
 		}else if(tempStop!=0) {
 			mav.addObject("msg", "신고 누적으로 인해 계정이 일시 정지되었습니다.");
-			mav.setViewName("register/acBlockAlert");
+			mav.setViewName("/register/acBlockAlert");
 		}
 		return mav;
 	}
@@ -88,7 +88,7 @@ public class RegisterController {
 		//회원가입 폼
 		@GetMapping("/join")
 		public String join() {
-			return "register/join";	
+			return "/register/join";	
 		}
 		
 		//아이디 중복검사
@@ -100,7 +100,7 @@ public class RegisterController {
 			//뷰에서 사용하기 위해 모델 세팅
 			model.addAttribute("userid",userid);
 			model.addAttribute("result",result);
-			return "register/idCheck";
+			return "/register/idCheck";
 		}
 
 		// 회원 가입하고 처리하기
@@ -119,7 +119,7 @@ public class RegisterController {
 			//회원가입 실패 시 - 다시쓰게하기
 			}else {
 				mav.addObject("msg", "회원등록하는데 실패했습니다.");
-				mav.setViewName("register/joinOkResult");
+				mav.setViewName("/register/joinOkResult");
 			}
 			return mav;
 			
@@ -149,7 +149,7 @@ public class RegisterController {
 				mav.setViewName("redirect:joinEdit");
 			}else {//수정 실패 시 -> 이전페이지 (알림)
 				mav.addObject("msg", "회원정보를 수정하는데 실패했습니다.");
-				mav.setViewName("register/joinOkResult");
+				mav.setViewName("/register/joinOkResult");
 			}
 			return mav;
 		}
@@ -157,10 +157,10 @@ public class RegisterController {
 		 // 아이디 찾기 
 	      @GetMapping("/idSearchForm")
 	      public String idSearchForm() {
-	         return "register/idSearchForm";
+	         return "/register/idSearchForm";
 	      }
 	      
-	      @PostMapping("register/idSearchOk")
+	      @PostMapping("/register/idSearchOk")
 	      public ModelAndView idSearchOk(RegisterDTO dto) {
 	         ModelAndView mav = new ModelAndView();
 	         
@@ -168,11 +168,11 @@ public class RegisterController {
 	         
 	         if( userid != null) {
 	            mav.addObject("msg", "회원님의 아이디는 "+userid+" 입니다.");
-	            mav.setViewName("register/idSearchOkay");
+	            mav.setViewName("/register/idSearchOkay");
 	            
 	         } else {
 	            mav.addObject("msg", "입력하신 정보와 일치하는 아이디가 없습니다.");
-	            mav.setViewName("register/idSearchFail");
+	            mav.setViewName("/register/idSearchFail");
 	         }
 	         
 	         return mav;
@@ -181,7 +181,7 @@ public class RegisterController {
 	      // 비밀번호 찾기
 	      @GetMapping("/pwdSearchForm")
 	      public String pwdSearchForm() {
-	         return "register/pwdSearchForm";
+	         return "/register/pwdSearchForm";
 	      }
 	      
 	      @Inject

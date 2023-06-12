@@ -160,7 +160,7 @@ public class AdminController {
 		List<RegisterDTO> list = service.userSelect();
 		mav.addObject("list", list);
 		
-		mav.setViewName("admin/adminMain");
+		mav.setViewName("/admin/adminMain");
 		return mav;
 	}
 	
@@ -172,7 +172,7 @@ public class AdminController {
 		ccdto = service.csBoardSelect(cus_b_num);
 		mav.addObject("CustomerCenterDTO",ccdto);
 		mav.addObject("vo",vo);
-		mav.setViewName("admin/faqlistAdmin");
+		mav.setViewName("/admin/faqlistAdmin");
 
 		return mav;
 		
@@ -196,7 +196,7 @@ public class AdminController {
 		mav.addObject("vo2",vo2);
 		mav.addObject("list", list);
 		mav.addObject("list2", list2);
-		mav.setViewName("admin/adUser");
+		mav.setViewName("/admin/adUser");
 		return mav;
 	}
 	//임시정지
@@ -250,7 +250,7 @@ public class AdminController {
 		
 		mav.addObject("vo",vo);
 		mav.addObject("list", list);
-		mav.setViewName("admin/adReport");
+		mav.setViewName("/admin/adReport");
 		return mav;
 	}
 	
@@ -395,7 +395,7 @@ public class AdminController {
 		//
 		
 		///			
-		mav.setViewName("admin/adStat");
+		mav.setViewName("/admin/adStat");
 		return mav;
 	}
 	
@@ -409,7 +409,7 @@ public class AdminController {
 		
 		mav.addObject("vo",vo);
 		mav.addObject("list",list);
-		mav.setViewName("admin/adQna");
+		mav.setViewName("/admin/adQna");
 		return mav;
 	}
 	
@@ -423,14 +423,14 @@ public class AdminController {
 		mav.addObject("list", service.pageProductSelect(vo)); //list정보도 뷰페이지에서 사용하게
 		System.out.println("nowpage;"+vo.getNowPage()+"limitstart; "+vo.getLimitStart());
 		mav.addObject("vo",vo); //페이지 정보를 뷰페이지로 갖고가게
-		mav.setViewName("admin/adProduct");
+		mav.setViewName("/admin/adProduct");
 		return mav;
 	}
 	
 	@GetMapping("/productWrite")
 	public ModelAndView productWrite() {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("admin/productWrite");
+		mav.setViewName("/admin/productWrite");
 		return mav;
 	}
 	//상품 DB등록
@@ -484,7 +484,7 @@ public class AdminController {
 		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("dto",dto);
-		mav.setViewName("admin/productEdit");
+		mav.setViewName("/admin/productEdit");
 		return mav;
 		
 	}
@@ -521,7 +521,7 @@ public class AdminController {
 	@GetMapping("/adBoard")
 	public ModelAndView adBoard() {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("admin/adBoard");
+		mav.setViewName("/admin/adBoard");
 		return mav;
 	}
 	
@@ -536,7 +536,7 @@ public class AdminController {
 		
 		mav.addObject("list", list);		
 		mav.addObject("vo", vo);
-		mav.setViewName("admin/myOrderorigin");
+		mav.setViewName("/admin/myOrderorigin");
 		return mav;
 	}
 	
@@ -555,16 +555,16 @@ public class AdminController {
 	            int result = service.ordMultiUpdate(dto.getOn_no()); //주문 상태 업데이트
 	            if(result>0) {
 		            mav.addObject("errorMsg", "주문상태 업데이트 성공");
-		            mav.setViewName("admin/adOrdStatus");
+		            mav.setViewName("/admin/adOrdStatus");
 	            }else {
 	            	mav.addObject("errorMsg", "주문상태 업데이트 실패");
-		            mav.setViewName("admin/adOrdStatus");
+		            mav.setViewName("/admin/adOrdStatus");
 	            }
 	        }
 	    } catch (Exception e) {
 	    	e.printStackTrace();
 	        mav.addObject("errorMsg", "주문상태 업데이트 실패");
-	        mav.setViewName("admin/adOrdStatus");
+	        mav.setViewName("/admin/adOrdStatus");
 	    }
 
 	    return mav;
@@ -581,7 +581,7 @@ public class AdminController {
 		
 		mav.addObject("vo",vo);
 		mav.addObject("list", list);
-		mav.setViewName("admin/adOrderList");
+		mav.setViewName("/admin/adOrderList");
 		return mav;
 	}
 	
@@ -594,7 +594,7 @@ public class AdminController {
 		
 		mav.addObject("list", list);
 		mav.addObject("vo", vo);
-		mav.setViewName("admin/adOfflineList");
+		mav.setViewName("/admin/adOfflineList");
 		return mav;
 	}
 	
@@ -613,7 +613,7 @@ public class AdminController {
 		mav.addObject("list", list);
 		mav.addObject("vo", vo);		
 		mav.addObject("nowPage", vo.getNowPage());
-		mav.setViewName("admin/adOfflineList");
+		mav.setViewName("/admin/adOfflineList");
 		return mav;
 	}
 	

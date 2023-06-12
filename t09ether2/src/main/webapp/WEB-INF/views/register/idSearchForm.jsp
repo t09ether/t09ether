@@ -26,7 +26,7 @@
 <div class="container">
    <div>
       <h1>아이디 찾기</h1>
-      <form method="post" id="idSearchForm"  action="/home/register/idSearchOk">
+      <form method="post" id="idSearchForm"  action="<%=request.getContextPath() %>/register/idSearchOk">
          <ul>
             <li>이름</li>
             <li><input type="text" name="username" id="username" placeholder="회원가입시 입력했던 이름을 입력하세요."/></li>

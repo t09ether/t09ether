@@ -123,7 +123,7 @@
 		//댓글목록 ajax로 해당 게시물에 대한 모든 댓글을 선택하여 뷰에 표시하는 함수--------------------------
 		function replyList() {
 			$.ajax({
-				url : "/home/replyList",
+				url : "<%=request.getContextPath() %>/replyList",
 				data : {
 					cus_b_num:${CustomerCenterDTO.cus_b_num}
 				},
@@ -185,7 +185,7 @@
 			var query = $(this).serialize(); // no=44&coment=hihi
 			console.log(query);
 			$.ajax({
-				url : "/home/replySend",
+				url : "<%=request.getContextPath() %>/replySend",
 				data : query,
 				type : "POST",
 				success : function(result) {
@@ -219,7 +219,7 @@
 		$(document).on('click','#replyList input[value=댓글수정하기]', function() {
 			//데이터 준비
 			var params = $(this).parent().serialize(); // c_no=34&coment=test
-			var url ="/home/replyEdit";
+			var url ="<%=request.getContextPath() %>/replyEdit";
 			
 			if(confirm("댓글을 수정하시겠습니까?")) {
 				$.ajax({
@@ -242,7 +242,7 @@
 			if(confirm("댓글을 삭제할까요?")) {
 				var params = "reply_num="+$(this).attr("title");
 				console.log(params);
-				var url = "/home/replyDelete";
+				var url = "<%=request.getContextPath() %>/replyDelete";
 				
 				$.ajax({
 					url:url,

@@ -88,19 +88,19 @@
    
    <!-- 통계 -->
    <select id="regiStat" resultType="com.t09ether.home.dto.DataVO">
-      select substr(DATE_FORMAT(writedate, '%Y-%m'),1,5) month, count(*) as cnt
+      select substr(DATE_FORMAT(writedate, '%y-%m'),1,5) month, count(*) as cnt
       from (select * from registerinfo where writedate<![CDATA[>=]]>'22-12-01' and writedate<![CDATA[<=]]>'23-05-30') a 
-      group by substr(DATE_FORMAT(writedate, '%Y-%m'),1,5) order by month asc
+      group by substr(DATE_FORMAT(writedate, '%y-%m'),1,5) order by month asc
    </select>
    <select id="onlineStat" resultType="com.t09ether.home.dto.DataVO">
-      select substr(date_format(orderdate, '%Y-%m'),1,5) month, count(pro_code) as cnt
+      select substr(date_format(orderdate, '%y-%m'),1,5) month, count(pro_code) as cnt
       from (select * from order09 where orderdate<![CDATA[>=]]>'22-12-01' and orderdate<![CDATA[<=]]>'23-05-30') a 
-      group by substr(date_format(orderdate, '%Y-%m'),1,5) order by month asc
+      group by substr(date_format(orderdate, '%y-%m'),1,5) order by month asc
    </select>
    <select id="offlineStat" resultType="com.t09ether.home.dto.DataVO">
-      select substr(date_format(writedate, '%Y-%m'),1,5) month, count(off_content) as cnt
+      select substr(date_format(writedate, '%y-%m'),1,5) month, count(off_content) as cnt
       from (select * from off_gb where writedate<![CDATA[>=]]>'22-12-01' and writedate<![CDATA[<=]]>'23-05-30') a 
-      group by substr(date_format(writedate, '%Y-%m'),1,5) order by month asc
+      group by substr(date_format(writedate, '%y-%m'),1,5) order by month asc
    </select>
 <!--    <select id="onPopStat" resultType="com.t09ether.home.dto.DataVO">
       select * from (select pro_name, count(pro_name) as cnt
@@ -164,14 +164,15 @@
             select r.username, r.userid, r.tel, r.email, r.ranking, DATE_FORMAT(t.writedate,'%m-%d %H:%i') writedate, r.report 
             from registerinfo r join temp_stop t on r.userid=t.userid
             <if test="searchWord2!=null">
-               and ${searchKey} like concat('%', #{searchWord}, '%')
+               and ${searchKey2} like concat('%', #{searchWord2}, '%')
             </if>
             order by writedate desc 
-            LIMIT #{limitStart}, #{onePageRecord}
+            LIMIT #{limitStart2}, #{onePageRecord2}
    </select>
    <insert id="tempStopInsert">
-      <foreach item="item" collection="list" open="insert all" separator=" " close="select * from dual">
-         into temp_stop (tempStop, writedate, userid) values(1, now(), #{item})
+   	insert into temp_stop (tempStop, writedate, userid) values
+   	  <foreach collection="list" item="item" index="index" separator=",">
+         (1, now(), #{item})
       </foreach>
    </insert>
    <delete id="tempStopDel">

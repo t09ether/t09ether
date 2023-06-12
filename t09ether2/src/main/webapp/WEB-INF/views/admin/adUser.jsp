@@ -163,7 +163,7 @@
 									<td>${bDTO.userid }</td>
 									<td>${bDTO.tel }</td>
 									<td>${bDTO.email }</td>
-									<td>${bDTO.rank }</td>
+									<td>${bDTO.ranking }</td>
 									<td>${bDTO.writedate }</td>
 									<td>${bDTO.report }</td>
 								</tr>
@@ -277,7 +277,7 @@
 									<td>${bDTO2.userid }</td>
 									<td>${bDTO2.tel }</td>
 									<td>${bDTO2.email }</td>
-									<td>${bDTO2.rank }</td>
+									<td>${bDTO2.ranking }</td>
 									<td>${bDTO2.writedate }</td>
 									<td>${bDTO2.report }</td>
 								</tr>

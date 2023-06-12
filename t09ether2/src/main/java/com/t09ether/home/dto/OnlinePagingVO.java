@@ -37,7 +37,6 @@ public class OnlinePagingVO {
 		//출력할 페이지 시작번호를 계산
 		//((현재페이지-1)/표시할 페이지수)*표시할페이지수+1
 		startPageNum = ((nowPage-1)/onePageNumCount)*onePageNumCount+1;
-		limitStart = (nowPage - 1) * onePageRecord;
 	}
 
 	public int getOnePageRecord() {
@@ -156,9 +155,8 @@ public class OnlinePagingVO {
 		return searchKey;
 	}
 
-	public void setSearchKey(String searchkey) {
+	public void setSearchKey(String searchKey) {
 		this.searchKey = searchKey;
 	}
-
 
 }

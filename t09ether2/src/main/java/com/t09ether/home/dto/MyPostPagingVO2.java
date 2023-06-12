@@ -1,48 +1,39 @@
 package com.t09ether.home.dto;
 
 public class MyPostPagingVO2 {
-	private int nowPage2 = 1; // 현재 페이지
-	private int onePageRecord2=5; // 한 페이지에 표시할 레코드 수
-	private int totalRecord2; // 총 레코드 수
-	private int totalPage2; // 총 페이지 수
-	private int lastPageRecord2;//마지막 페이지에 남아 있는 레코드수
-	private int onePageNumCount2=5;//한 페이지 당 페이지 갯수
-	
+
+	private int nowPage2; // 현재 페이지
+	private int onePageRecord2; // 한 페이지에 표시할 레코드 수
+	private int onePageNumCount2;//한 페이지 당 페이지 갯수
+
 	//검색변수
 	private String searchKey2;
 	private String searchWord2;
-	private String userid;
+
 	
-	// 페이징하기
-	private int startPageNum2 = 1; // 첫 페이지번호 startPage
-	private int endPageNum2;
-	private int limitStart2;
+	public MyPostPagingVO2(){
+		this.nowPage2 = 1;
+        this.onePageRecord2 = 5;
+        this.onePageNumCount2 = 5;
+	}
 	
 	public int getOffset() {
         return (nowPage2 - 1) * onePageRecord2;
     }
 	
+	private int totalRecord2; // 총 레코드 수
+	private int totalPage2; // 총 페이지 수
+	private int startPageNum2 = 1;
+	
+	private int endPageNum2;//끝페이지번호 endPage
+    private int limitStart2;           // LIMIT 시작 위치 
+    private boolean existPrevPage2;    // 이전 페이지 존재 여부
+    private boolean existNextPage2;    // 다음 페이지 존재 여부
+	
+	private int lastPageRecord2;//마지막 페이지에 남아 있는 레코드수
+	
+	private String userid;
 
-	public int getEndPageNum2() {
-		return endPageNum2;
-	}
-
-	public void setEndPageNum2(int endPageNum2) {
-		this.endPageNum2 = endPageNum2;
-		endPageNum2 = startPageNum2 + onePageNumCount2 - 1;
-		if (endPageNum2 > totalRecord2) {
-            endPageNum2 = totalRecord2;
-        }
-	}
-
-	public int getLimitStart2() {
-		return limitStart2;
-	}
-
-	public void setLimitStart2(int limitStart2) {
-		this.limitStart2 = limitStart2;
-		limitStart2 = (nowPage2 - 1) * onePageRecord2;
-	}
 
 	public String getUserid() {
 		return userid;
@@ -66,6 +57,7 @@ public class MyPostPagingVO2 {
 		//출력할 페이지 시작 번호를 계산
 		//((현재 페이지-1)/표시할 페이지 수)*표시할 페이수 + 1
 		startPageNum2 = ((nowPage2-1)/onePageNumCount2)*onePageNumCount2+1;
+		limitStart2 = (nowPage2 - 1) * onePageRecord2;
 		
 	}
 	
@@ -103,6 +95,56 @@ public class MyPostPagingVO2 {
 	public void setTotalPage2(int totalPage2) {
 		this.totalPage2 = totalPage2;
 	}
+	
+	public int getStartPageNum2() {
+		return startPageNum2;
+	}
+
+	public void setStartPageNum2(int startPageNum2) {
+		this.startPageNum2 = startPageNum2;
+	}
+	
+	public int getEndPageNum2() {
+		return endPageNum2;
+	}
+
+	public void setEndPageNum2(int endPageNum2) {
+		this.endPageNum2 = endPageNum2;
+		
+		endPageNum2 = startPageNum2 + onePageNumCount2 - 1;
+		if (endPageNum2 > totalRecord2) {
+            endPageNum2 = totalRecord2;
+        }
+	}
+
+	public int getLimitStart2() {
+		return limitStart2;
+	}
+
+	public void setLimitStart2(int limitStart2) {
+		this.limitStart2 = limitStart2;
+		limitStart2 = (nowPage2 - 1) * onePageRecord2;
+	}
+
+	public boolean isExistPrevPage2() {
+		return existPrevPage2;
+	}
+
+	public void setExistPrevPage2(boolean existPrevPage2) {
+		this.existPrevPage2 = existPrevPage2;
+		existPrevPage2 = startPageNum2 != 1;
+	}
+
+	public boolean isExistNextPage2() {
+		return existNextPage2;
+	}
+
+	public void setExistNextPage2(boolean existNextPage2) {
+		this.existNextPage2 = existNextPage2;
+		 existNextPage2 = (endPageNum2 * onePageRecord2) < totalRecord2;
+	}
+	
+	
 	public int getLastPageRecord2() {
 		return lastPageRecord2;
 	}
@@ -118,13 +160,6 @@ public class MyPostPagingVO2 {
 		this.onePageNumCount2 = onePageNumCount2;
 	}
 
-	public int getStartPageNum2() {
-		return startPageNum2;
-	}
-
-	public void setStartPageNum2(int startPageNum2) {
-		this.startPageNum2 = startPageNum2;
-	}
 
 	public String getSearchKey2() {
 		return searchKey2;

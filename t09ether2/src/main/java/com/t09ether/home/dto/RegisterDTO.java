@@ -19,7 +19,7 @@ public class RegisterDTO {
 	private String zipcode;
 	private String addr;
 	private String addrdetail;
-	private int rank;
+	private int ranking;
 	private String writedate;
 	private int report;
 	private int exp;
@@ -32,7 +32,7 @@ public class RegisterDTO {
 	public String toString() {
 		return "RegisterDTO [rownum=" + rownum + ", userid=" + userid + ", userpwd=" + userpwd + ", username="
 				+ username + ", tel=" + tel + ", tel1=" + tel1 + ", tel2=" + tel2 + ", tel3=" + tel3 + ", email="
-				+ email + ", zipcode=" + zipcode + ", addr=" + addr + ", addrdetail=" + addrdetail + ", rank=" + rank
+				+ email + ", zipcode=" + zipcode + ", addr=" + addr + ", addrdetail=" + addrdetail + ", rank=" + ranking
 				+ ", writedate=" + writedate + ", report=" + report + ", exp=" + exp + "]";
 	}
 
@@ -123,11 +123,11 @@ public class RegisterDTO {
 	public void setAddrdetail(String addrdetail) {
 		this.addrdetail = addrdetail;
 	}
-	public int getRank() {
-		return rank;
+	public int getRanking() {
+		return ranking;
 	}
-	public void setRank(int rank) {
-		this.rank = rank;
+	public void setRanking(int ranking) {
+		this.ranking = ranking;
 	}
 	public String getWritedate() {
 		return writedate;

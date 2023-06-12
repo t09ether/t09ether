@@ -124,6 +124,7 @@ public class OfflineController extends SmsSend{
 
 		OfflineDTO dto = service.offlineSelect(off_no);		
 		dto.setCurrent_num(service.currentNumCount(off_no));
+		System.out.println("test"+dto.toString());
 		//참가자들 담기
 		List<OfflineParticipantDTO> list = service.participantList(off_no);
 		List<String> idList = service.getIds(off_no);

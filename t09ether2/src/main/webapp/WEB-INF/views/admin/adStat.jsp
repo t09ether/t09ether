@@ -45,15 +45,6 @@
                         <div class="card-body"><canvas id="offlineChart"></canvas></div>
                     </div>
                 </div>
-                <div class="col-xl-6">
-                    <div class="card mb-4">
-                        <div class="card-header">
-                            <i class="fas fa-chart-bar me-1"></i>
-                            온라인 상품별 거래량
-                        </div>
-                        <div class="card-body"><canvas id="onPopChart"></canvas></div>
-                    </div>
-                </div>
             </div>
 
 	</section>

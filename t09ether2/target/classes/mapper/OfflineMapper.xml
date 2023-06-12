@@ -6,7 +6,7 @@
 	<insert id="offlineInsert">
 		insert into	off_gb(off_no, userid, off_subject, off_content, location, group_num, current_num, app_time, deaddate, off_hit, writedate, status)
 		 select case count(*) when 0 then 1 else max(off_no) + 1 end ,#{userid},#{off_subject},#{off_content},
-		#{location},${group_num},${current_num},DATE_FORMAT(#{app_time}, '%m-%d'),DATE_FORMAT(#{deaddate}, '%m-%d'),${off_hit}, now(), 1 from off_gb
+		#{location},${group_num},${current_num},DATE_FORMAT(#{app_time}, '%y-%m-%d'),DATE_FORMAT(#{deaddate}, '%y-%m-%d'),${off_hit}, now(), 1 from off_gb
 		<selectKey keyProperty="off_no" resultType="int" order="AFTER">
 			SELECT MAX(off_no)+1 FROM off_gb
 		</selectKey>
@@ -16,7 +16,7 @@
 	</select>
 	<select id="offList" resultType="com.t09ether.home.dto.OfflineDTO">
 		 select b.off_no, b.userid, b.off_subject, b.off_content, b.location, b.current_num,
-		 b.group_num, DATE_FORMAT(b.app_time, '%m-%d') app_time, DATE_FORMAT(b.deaddate, '%m-%d') deaddate, 
+		 b.group_num, DATE_FORMAT(b.app_time, '%y-%m-%d') app_time, DATE_FORMAT(b.deaddate, '%y-%m-%d') deaddate, 
 		 r.username, b.off_hit, DATE_FORMAT(b.writedate, '%m-%d') writedate , b.status 
 		 from off_gb b join registerinfo r on b.userid=r.userid 
 		 <if test="searchWord != null"><!-- 검색어가 있을 경우 -->
@@ -26,7 +26,7 @@
 		 LIMIT #{limitStart}, #{onePageRecord}
 	</select>
 	<select id="offlineSelect" resultType="com.t09ether.home.dto.OfflineDTO">
-		select off_no, userid, off_subject, off_content, location, group_num, current_num, DATE_FORMAT(app_time, '%m-%d') app_time, DATE_FORMAT(deaddate, '%m-%d') deaddate, off_hit, DATE_FORMAT(writedate, '%m-%d') writedate, status
+		select off_no, userid, off_subject, off_content, location, group_num, current_num, DATE_FORMAT(app_time, '%y-%m-%d') app_time, DATE_FORMAT(deaddate, '%y-%m-%d') deaddate, off_hit, DATE_FORMAT(writedate, '%m-%d') writedate, status
 		from off_gb where off_no=${param1}
 	</select>
 	<update id="offlineHitCount">

@@ -41,7 +41,7 @@ $(function() {
          success:function(result) {
             if(result=='Y') {
                alert("입력하신 이메일로 비밀번호를 전송했습니다.");
-               location.href="/home/loginForm";
+               location.href="<%=request.getContextPath() %>/loginForm";
             }else {
                alert("아이디 혹은 비밀번호가 일치하지 않습니다.");
             }

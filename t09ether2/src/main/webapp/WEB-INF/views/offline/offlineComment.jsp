@@ -98,7 +98,7 @@
 		function commentList(){
 			console.log("댓글리스트");
 			$.ajax({
-				url:"/home/commentList",
+				url:"<%=request.getContextPath() %>/commentList",
 				data:{
 					off_no:${dto.off_no}
 					},
@@ -149,7 +149,7 @@
 			var query = $(this).serialize();
 			console.log(query);
 			$.ajax({
-				url:"/home/commentSend",
+				url:"<%=request.getContextPath() %>/commentSend",
 				data:query,
 				type:"POST",
 				success:function(result){
@@ -178,7 +178,7 @@
 		$(document).on('click',"#commentList input[value=댓글수정하기]",function(){
 			//데이터준비
 			var params = $(this).parent().serialize();// c_no=34&coment=test
-			var url = "/home/commentEdit";
+			var url = "<%=request.getContextPath() %>/commentEdit";
 			
 			$.ajax({
 				url:url,
@@ -204,7 +204,7 @@
 			if(confirm("댓글을 삭제할까요?")){
 				var params = "comment_no="+$(this).attr("title");
 				console.log(params);
-				var url ="/home/commentDelete";
+				var url ="<%=request.getContextPath() %>/commentDelete";
 				$.ajax({
 					url:url,
 					data:params,

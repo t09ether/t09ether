@@ -76,7 +76,7 @@ $(function(){
     		  success: function(response) {
     		    if (response.code === '1') {
     		      alert('환불이 완료되었습니다.');
-    		      location.href="/home/mypage/myOrder";
+    		      location.href="<%=request.getContextPath() %>/mypage/myOrder";
     		      // 환불 완료 후 처리할 코드를 입력합니다.
     		    } else {
     		      alert('환불 처리 중 오류가 발생했습니다.');

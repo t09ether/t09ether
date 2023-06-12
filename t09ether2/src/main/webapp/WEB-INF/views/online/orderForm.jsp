@@ -208,7 +208,7 @@ $(function(){
             success: function(result) {
                console.log(result);
                alert("취소 성공");
-               location.href="/home/product/onlineHome";
+               location.href="<%=request.getContextPath() %>/product/onlineHome";
                //self.close();
             },
             error: function(result){

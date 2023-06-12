@@ -51,7 +51,7 @@ public class OnlineController extends SmsSend {
 		System.out.println("onlineJoin"+dto);
 		mav.addObject("dto", dto);
 		mav.addObject("pdto", dto);
-		mav.setViewName("online/onlineJoinForm"); 
+		mav.setViewName("/online/onlineJoinForm"); 
 		return mav; 
 	}
 	
@@ -62,7 +62,7 @@ public class OnlineController extends SmsSend {
 		//검색어
 		mav.addObject("vo",vo);
 		mav.addObject("dto", dto);
-		mav.setViewName("online/kakaomap");
+		mav.setViewName("/online/kakaomap");
 		return mav;
 	}
 	//지도 나눔장소 리스트

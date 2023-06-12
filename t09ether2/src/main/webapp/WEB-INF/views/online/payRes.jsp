@@ -165,7 +165,7 @@ $(function(){
                     success: function(result) {
                        console.log(result);
                        alert("결제 성공");
-                       location.href="/home/online/paymentSucOk";
+                       location.href="<%=request.getContextPath() %>/online/paymentSucOk";
                             //form에 정보담아 submit
                        
                        //self.close();
@@ -216,7 +216,7 @@ $(function(){
             success: function(result) {
                console.log(result);
                alert("취소 성공");
-               location.href="/home/product/onlineHome";
+               location.href="<%=request.getContextPath() %>/product/onlineHome";
                //self.close();
             },
             error: function(result){

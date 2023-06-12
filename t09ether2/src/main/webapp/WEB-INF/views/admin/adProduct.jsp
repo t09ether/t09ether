@@ -43,7 +43,7 @@
 	$(function(){
 		$("#productInsert").on("click", function () {
 			event.preventDefault();
-			location.href="/home/admin/productWrite"
+			location.href="<%=request.getContextPath() %>/admin/productWrite"
 		})
 		
 		$("#allCheck").click(function(){
@@ -84,7 +84,7 @@
 				<!-- 주문내역 리스트 -->
 				<section class="box">
 					<div class="table-wrapper">
-					<form method="post" action="/home/admin/productDel" id="productDel">
+					<form method="post" action="<%=request.getContextPath() %>/admin/productDel" id="productDel">
 					<input type="hidden" name="nowPage" value="${vo.nowPage }"/>
 					<c:if test="${vo.searchWord!=null}">
 						<input type="hidden" name="searchKey" value="${vo.searchKey }"/>

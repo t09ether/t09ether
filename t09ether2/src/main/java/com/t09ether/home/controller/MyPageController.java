@@ -38,7 +38,7 @@ public class MyPageController {
 	@GetMapping("/myPage")
 	public ModelAndView myPage() {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("mypage/myPage");
+		mav.setViewName("/mypage/myPage");
 		
 		return mav;		
 	}
@@ -65,7 +65,7 @@ public class MyPageController {
 		mav.addObject("vo2", vo2);
 		mav.addObject("list", list);
 		mav.addObject("list2",list2);
-		mav.setViewName("mypage/myOrder");
+		mav.setViewName("/mypage/myOrder");
 		return mav;
 	}
 	
@@ -93,20 +93,20 @@ public class MyPageController {
 						service.rankUpdate(vo.getUserid());
 					}
 					
-					mav.addObject("errorMsg", "만남완료 및 경험치 업데이트 성공");
-					mav.setViewName("mypage/joinStatus");
+					mav.addObject("errorMsg", "만남완료 및 경험치 상승");
+					mav.setViewName("/mypage/joinStatus");
 				}else {
 					mav.addObject("errorMsg",  "만남완료 업데이트 성공, 경험치 업데이트 실패");
-					mav.setViewName("mypage/joinStatus");
+					mav.setViewName("/mypage/joinStatus");
 				}
 			}else {
 				mav.addObject("errorMsg", "만남완료 업데이트 실패");
-				mav.setViewName("mypage/joinStatus");
+				mav.setViewName("/mypage/joinStatus");
 			}
 		}catch(Exception e){
 			e.printStackTrace();
 			mav.addObject("errorMsg", "만남완료 업데이트 실패");
-			mav.setViewName("mypage/joinStatus");
+			mav.setViewName("/mypage/joinStatus");
 		}
 		return mav;
 	}
@@ -132,7 +132,7 @@ public class MyPageController {
 		mav.addObject("vo2", vo2);
 		mav.addObject("list", list);
 		mav.addObject("list2",list2);
-		mav.setViewName("mypage/myPost");
+		mav.setViewName("/mypage/myPost");
 		return mav;
 	}
 	
@@ -147,7 +147,7 @@ public class MyPageController {
 		mav.addObject("dto", dto);
 		mav.addObject("vo", vo);
 		mav.addObject("list", list);
-		mav.setViewName("mypage/myPostView");
+		mav.setViewName("/mypage/myPostView");
 		
 		return mav;
 	}
@@ -155,7 +155,7 @@ public class MyPageController {
 	@GetMapping("/myPersInfo")
 	public ModelAndView myPersInfo() {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("mypage/myPersInfo");
+		mav.setViewName("/mypage/myPersInfo");
 		
 		return mav;
 	}
@@ -168,7 +168,7 @@ public class MyPageController {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("userid", userid);
 		mav.addObject("username", username);
-		mav.setViewName("mypage/myPersInfo_IdChk");
+		mav.setViewName("/mypage/myPersInfo_IdChk");
 		
 		return mav;
 	}
@@ -183,11 +183,11 @@ public class MyPageController {
 			dto = service.mpRegisterEdit((String)session.getAttribute("logId"));
 			mav.addObject("dto", dto);
 			
-			mav.setViewName("mypage/myPersInfo");
+			mav.setViewName("/mypage/myPersInfo");
 			
 		}else { //실패
 			mav.addObject("msg", "비밀번호를 확인해주세요.");
-			mav.setViewName("mypage/psInfoEditResult");
+			mav.setViewName("/mypage/psInfoEditResult");
 		}
 		return mav;
 	}
@@ -202,10 +202,10 @@ public class MyPageController {
 		ModelAndView mav = new ModelAndView();
 		if(cnt>0) {
 			mav.addObject("msg","회원 정보를 수정하였습니다.");
-			mav.setViewName("mypage/psInfoResultS");
+			mav.setViewName("/mypage/psInfoResultS");
 		}else {
 			mav.addObject("msg","회원 정보 수정에 실패하였습니다.");
-			mav.setViewName("mypage/psInfoResult");
+			mav.setViewName("/mypage/psInfoResult");
 		}
 		
 		return mav;
@@ -222,10 +222,10 @@ public class MyPageController {
 		ModelAndView mav = new ModelAndView();
 		if(cnt>0) {
 			mav.addObject("msg","회원 정보를 수정하였습니다.");
-			mav.setViewName("mypage/psInfoResultS");
+			mav.setViewName("/mypage/psInfoResultS");
 		}else {
 			mav.addObject("msg","회원 정보 수정에 실패하였습니다.");
-			mav.setViewName("mypage/psInfoResult");
+			mav.setViewName("/mypage/psInfoResult");
 		}
 		
 		return mav;
@@ -236,7 +236,7 @@ public class MyPageController {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("ord_no", ord_no);
 		mav.addObject("pd_userid", pd_userid);
-		mav.setViewName("mypage/reportWrite");
+		mav.setViewName("/mypage/reportWrite");
 		return mav;
 	}
 	

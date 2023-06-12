@@ -2,5 +2,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <script>
 	alert("${errorMsg}");
-	location.href ="/home/mypage/myOrder";
+	location.href ="<%=request.getContextPath() %>/mypage/myOrder";
 </script>

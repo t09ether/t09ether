@@ -45,15 +45,6 @@
                         <div class="card-body"><canvas id="offlineChart"></canvas></div>
                     </div>
                 </div>
-                <%-- <div class="col-xl-6">
-                    <div class="card mb-4">
-                        <div class="card-header">
-                            <i class="fas fa-chart-bar me-1"></i>
-                            온라인 상품별 거래량
-                        </div>
-                        <div class="card-body"><canvas id="onPopChart"></canvas></div>
-                    </div>
-                </div> --%>
             </div>
 
 	</section>
@@ -198,7 +189,7 @@
 	});
 	
 	//온라인 인기 상품
-	var labelList3 = new Array();
+	/*var labelList3 = new Array();
 	var valueList3 = new Array();
 	var colorList3 = new Array();
 	
@@ -221,7 +212,7 @@
 						label: '온라인 상품별 거래량',
 						fill:false,
 						borderColor:'rgb(138, 74, 88)',
-						tension:0.1  */	
+						tension:0.1  
 				}],
 				options : {
 						title : {
@@ -231,12 +222,12 @@
 				}
 	};
 			
-	/* var ctx1 = document.getElementById('onPopChart').getContext('2d');
+	 var ctx1 = document.getElementById('onPopChart').getContext('2d');
 	new Chart(ctx1, {
 		      type: 'doughnut',
 			  data: data
-	}); */
-	
+	}); 
+	*/	
 </script>
 
 

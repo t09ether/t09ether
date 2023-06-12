@@ -277,9 +277,9 @@
             <li style="width:12%; float:left; margin:2px; text-align:center; margin-top:15px;">모집인원</li>
             <li><input type="text" name="group_num" id="group_num" placeholder ="0" style="width:20%; float:left; margin:2px;"/></li>               
             <li style="width:14%; float:left; margin:2px; text-align:center; margin-top:15px;">모집마감일</li>
-            <li><input type="text" name="deaddate" id="deaddate" placeholder="MM-DD" style="width:20%; float:left; margin:2px;"/></li>
+            <li><input type="text" name="deaddate" id="deaddate" placeholder="YY-MM-DD" style="width:20%; float:left; margin:2px;"/></li>
             <li style="width:14%; float:left; margin:2px; text-align:center; margin-top:15px;">공구날짜</li>
-            <li><input type="text" name="app_time" id="app_time" placeholder="MM-DD" style="width:18%; float:left; margin:2px;"/></li>         
+            <li><input type="text" name="app_time" id="app_time" placeholder="YY-MM-DD" style="width:18%; float:left; margin:2px;"/></li>         
          <li style="margin-bottom:40px;">&nbsp;</li>
          <li>상세 안내</li>            
          <li>

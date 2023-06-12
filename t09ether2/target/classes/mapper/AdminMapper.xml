@@ -89,24 +89,19 @@
    <!-- 통계 -->
    <select id="regiStat" resultType="com.t09ether.home.dto.DataVO">
       select substr(DATE_FORMAT(writedate, '%y-%m'),1,5) month, count(*) as cnt
-      from (select * from registerinfo where writedate<![CDATA[>=]]>'22-12-01' and writedate<![CDATA[<=]]>'23-05-30') a 
+      from (select * from registerinfo where writedate<![CDATA[>=]]>'22-12-01' and writedate<![CDATA[<=]]>'23-12-31') a 
       group by substr(DATE_FORMAT(writedate, '%y-%m'),1,5) order by month asc
    </select>
    <select id="onlineStat" resultType="com.t09ether.home.dto.DataVO">
       select substr(date_format(orderdate, '%y-%m'),1,5) month, count(pro_code) as cnt
-      from (select * from order09 where orderdate<![CDATA[>=]]>'22-12-01' and orderdate<![CDATA[<=]]>'23-05-30') a 
+      from (select * from order09 where orderdate<![CDATA[>=]]>'22-12-01' and orderdate<![CDATA[<=]]>'23-12-31') a 
       group by substr(date_format(orderdate, '%y-%m'),1,5) order by month asc
    </select>
    <select id="offlineStat" resultType="com.t09ether.home.dto.DataVO">
       select substr(date_format(writedate, '%y-%m'),1,5) month, count(off_content) as cnt
-      from (select * from off_gb where writedate<![CDATA[>=]]>'22-12-01' and writedate<![CDATA[<=]]>'23-05-30') a 
+      from (select * from off_gb where writedate<![CDATA[>=]]>'22-12-01' and writedate<![CDATA[<=]]>'23-12-31') a 
       group by substr(date_format(writedate, '%y-%m'),1,5) order by month asc
    </select>
-<!--    <select id="onPopStat" resultType="com.t09ether.home.dto.DataVO">
-      select * from (select pro_name, count(pro_name) as cnt
-      from (select * from order09 o join product p on o.pro_code=p.pro_code where orderdate<![CDATA[>=]]>'22-12-01' and orderdate<![CDATA[<=]]>'23-05-30') a 
-      group by pro_name order by cnt desc) S LIMIT 0, 5
-   </select> -->
 
    <!-- 온라인 상품관리 -->
    <select id="totalProductRecord" resultType="int">
@@ -169,9 +164,9 @@
             order by writedate desc 
             LIMIT #{limitStart2}, #{onePageRecord2}
    </select>
-   <insert id="tempStopInsert">
-   	insert into temp_stop (tempStop, writedate, userid) values
-   	  <foreach collection="list" item="item" index="index" separator=",">
+      <insert id="tempStopInsert">
+      insert into temp_stop (tempStop, writedate, userid) values
+        <foreach collection="list" item="item" index="index" separator=",">
          (1, now(), #{item})
       </foreach>
    </insert>

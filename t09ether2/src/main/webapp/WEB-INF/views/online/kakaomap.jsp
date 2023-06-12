@@ -52,7 +52,7 @@ header,footer{
 			let params = $("#searchForm").serialize();
 			console.log(params);
 			$.ajax({
-				url:"${pageContext.request.contextPath}/online/kakaomapList", //commentController에 있어
+				url:"<%=request.getContextPath() %>/online/kakaomapList", //commentController에 있어
 				type:"GET",		//서버서 가져온데이터
 				data: params,
 				dataType:'json',
@@ -130,7 +130,7 @@ header,footer{
 			let params = $("#searchForm").serialize();
 			
 			$.ajax({
-				url:"${pageContext.request.contextPath}/online/searchList", //onlineController에 있어
+				url:"<%=request.getContextPath() %>/online/searchList", //onlineController에 있어
 				type:"GET",		//서버서 가져온데이터
 				data:params,
 				success:function(searchresult){

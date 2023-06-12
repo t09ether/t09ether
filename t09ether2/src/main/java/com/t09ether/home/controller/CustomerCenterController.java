@@ -48,7 +48,7 @@ public class CustomerCenterController {
 		vo.setTotalRecord(service.totalRecord(vo));
 		mav.addObject("list",service.pageSelect(vo));
 		mav.addObject("vo",vo);
-		mav.setViewName("customer/customerBoard");
+		mav.setViewName("/customer/customerBoard");
 		
 		return mav;
 	}
@@ -56,7 +56,7 @@ public class CustomerCenterController {
 	@GetMapping("/csBoardWrite")
 	public ModelAndView csBoardWrite() {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("customer/csBoardWrite");
+		mav.setViewName("/customer/csBoardWrite");
 		
 		return mav;
 	}
@@ -71,7 +71,7 @@ public class CustomerCenterController {
 		try {
 			int result = service.csBoardInsert(cdto);
 			//service.csBoardInsert(cdto);
-			htmlTag += "location.href='/home/customer/customerBoard';";
+			htmlTag += "location.href='/t09ether2/customer/customerBoard';";
 		
 		}catch(Exception e) {
 			htmlTag += "alert('Q&A 문의글을 등록하는데 실패했습니다');";
@@ -102,7 +102,7 @@ public class CustomerCenterController {
 		mav.addObject("cdto", cdto);
 		mav.addObject("vo", vo);
 		
-		mav.setViewName("customer/csBoardEdit");
+		mav.setViewName("/customer/csBoardEdit");
 		
 		return mav;
 		
@@ -175,7 +175,7 @@ public class CustomerCenterController {
 		ccdto = service.csBoardSelect(cus_b_num);
 		mav.addObject("CustomerCenterDTO",ccdto);
 		mav.addObject("vo",vo);
-		mav.setViewName("customer/faqlist");
+		mav.setViewName("/customer/faqlist");
 
 		return mav;
 		

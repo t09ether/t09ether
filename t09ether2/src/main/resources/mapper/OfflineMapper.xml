@@ -26,7 +26,7 @@
 		 LIMIT #{limitStart}, #{onePageRecord}
 	</select>
 	<select id="offlineSelect" resultType="com.t09ether.home.dto.OfflineDTO">
-		select off_no, userid, off_subject, off_content, location, group_num, current_num, DATE_FORMAT(app_time, '%m-%d') app_time, DATE_FORMAT(deaddate, '%m-%d') deaddate, off_hit, DATE_FORMAT(writedate, '%m-%d') writedate, status
+		select off_no, userid, off_subject, off_content, location, group_num, current_num, DATE_FORMAT(app_time, '%y-%m-%d') app_time, DATE_FORMAT(deaddate, '%y-%m-%d') deaddate, off_hit, DATE_FORMAT(writedate, '%m-%d') writedate, status
 		from off_gb where off_no=${param1}
 	</select>
 	<update id="offlineHitCount">

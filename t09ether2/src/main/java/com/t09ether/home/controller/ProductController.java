@@ -33,7 +33,7 @@ public class ProductController {
 	@GetMapping("/productWrite")
 	public ModelAndView productIn() {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("admin/productWrite");
+		mav.setViewName("/admin/productWrite");
 		return mav;
 	}
 	
@@ -46,7 +46,7 @@ public class ProductController {
 		//상품등록 실패하면 예외발생
 		try {
 			service.productInsert(dto);
-			String htmlTag = "<script>location.href='/home';</script>";
+			String htmlTag = "<script>location.href='/<%=request.getContextPath() %>';</script>";
 			entity = new ResponseEntity<String>(htmlTag, headers, HttpStatus.OK);
 			
 		}catch(Exception e) {
@@ -67,7 +67,7 @@ public class ProductController {
 		String userid = (String)session.getAttribute("userid");
 		ProductDTO dto = service.productDetailSelect(pro_code);
 		mav.addObject("dto", dto); //선택 레코드
-		mav.setViewName("online/onlineGB");
+		mav.setViewName("/online/onlineGB");
 		return mav;
 	}
 	
@@ -90,7 +90,7 @@ public class ProductController {
 			list.get(i).setRateAvg(rateAvg);
 		}
 		mav.addObject("list", list);
-		mav.setViewName("online/onlineList");
+		mav.setViewName("/online/onlineList");
 		return mav;
 	}
 	
@@ -113,7 +113,7 @@ public class ProductController {
 		mav.addObject("rateAvg", rateAvg);
 		mav.addObject("dto", dto); //선택 레코드
 		mav.addObject("vo", vo);//검색어
-		mav.setViewName("online/productDetail");
+		mav.setViewName("/online/productDetail");
 		return mav;
 	}
 }

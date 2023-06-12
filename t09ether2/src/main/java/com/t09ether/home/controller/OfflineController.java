@@ -56,7 +56,7 @@ public class OfflineController extends SmsSend{
 		mav.addObject("list", list);		
 		mav.addObject("list", service.offList(vo));		
 		mav.addObject("vo", vo);
-		mav.setViewName("offline/offline_board");
+		mav.setViewName("/offline/offline_board");
 		return mav;
 	}
 	
@@ -64,7 +64,7 @@ public class OfflineController extends SmsSend{
 	@GetMapping("/offlineWrite")
 	public ModelAndView offlineWrite() {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("offline/offlineWrite");
+		mav.setViewName("/offline/offlineWrite");
 		return mav;
 	}
 	
@@ -124,6 +124,7 @@ public class OfflineController extends SmsSend{
 
 		OfflineDTO dto = service.offlineSelect(off_no);		
 		dto.setCurrent_num(service.currentNumCount(off_no));
+		System.out.println("test"+dto.toString());
 		//참가자들 담기
 		List<OfflineParticipantDTO> list = service.participantList(off_no);
 		List<String> idList = service.getIds(off_no);
@@ -135,7 +136,7 @@ public class OfflineController extends SmsSend{
 		mav.addObject("idList", idList);//참여자들(아이디만)
 		mav.addObject("vo", vo); // 페이지번호, 검색어, 검색키
 		
-		mav.setViewName("offline/offlineView");
+		mav.setViewName("/offline/offlineView");
 		return mav;
 	}
 	
@@ -153,7 +154,7 @@ public class OfflineController extends SmsSend{
 		mav.addObject("dto", dto);
 		mav.addObject("vo", vo);
 			
-		mav.setViewName("offline/offlineEdit");
+		mav.setViewName("/offline/offlineEdit");
 			
 		return mav;
 		}	

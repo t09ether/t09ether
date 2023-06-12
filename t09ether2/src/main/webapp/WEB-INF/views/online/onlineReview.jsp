@@ -41,13 +41,13 @@ $(function(){
 		console.log(params);
 		$.ajax({
 			type:"POST",
-			url:"/home/online/reviewOk",
+			url:"<%=request.getContextPath() %>/online/reviewOk",
 			data:params,
 			contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 			success:function(result){
 				console.log(result); 
 				alert('리뷰가 등록되었습니다.');
-				location.href="/home/online/onlineReview?pro_code="+${dto.pro_code};
+				location.href="<%=request.getContextPath() %>/online/onlineReview?pro_code="+${dto.pro_code};
 			},error:function(error){
 				console.log(error.responseText); 
 			}
@@ -61,13 +61,13 @@ $(function(){
 			var params = "on_r_no="+ $(this).attr("title");
 			console.log(params);
 			$.ajax({
-				url:"/home/online/reviewDel",
+				url:"<%=request.getContextPath() %>/online/reviewDel",
 				data:params,
 				success:function(result){
 					console.log(result); 
 					if(result>0){
 						 alert('리뷰가 삭제되었습니다.');
-						 location.href="/home/online/onlineReview?pro_code="+${dto.pro_code};
+						 location.href="<%=request.getContextPath() %>/online/onlineReview?pro_code="+${dto.pro_code};
 					}
 				},error:function(error){
 					console.log(error.responseText); 

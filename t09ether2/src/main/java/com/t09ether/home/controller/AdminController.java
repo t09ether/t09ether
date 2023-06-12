@@ -373,25 +373,25 @@ public class AdminController {
 		//
 		
 		//온라인 인기상품
-		List<DataVO> onPopList = service.onPopStat();
+		//List<DataVO> onPopList = service.onPopStat();
 		
 		Gson onPopGson = new Gson();
 		JsonArray onPopjArray = new JsonArray();
 		
-		Iterator<DataVO> onPopIt = onPopList.iterator();
-		while(onPopIt.hasNext()) {
-			DataVO curVO = onPopIt.next();
-			JsonObject object = new JsonObject();
-			String pro_name = curVO.getPro_name();
-			int cnt = curVO.getCnt();
+		//Iterator<DataVO> onPopIt = onPopList.iterator();
+		//while(onPopIt.hasNext()) {
+		//	DataVO curVO = onPopIt.next();
+		//	JsonObject object = new JsonObject();
+		//	String pro_name = curVO.getPro_name();
+		//	int cnt = curVO.getCnt();
 			
-		    object.addProperty("Pro_name", pro_name);
-			object.addProperty("Count", cnt);
-			onPopjArray.add(object);
-		}		
+		//    object.addProperty("Pro_name", pro_name);
+		//	object.addProperty("Count", cnt);
+		//	onPopjArray.add(object);
+		//}		
 		
-		String onPopJson = onPopGson.toJson(onPopjArray);
-		mav.addObject("onPopJson", onPopJson);
+		//String onPopJson = onPopGson.toJson(onPopjArray);
+		//mav.addObject("onPopJson", onPopJson);
 		//
 		
 		///			

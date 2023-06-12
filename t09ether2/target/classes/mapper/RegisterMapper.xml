@@ -7,7 +7,6 @@
 		select userid, username, ranking, report from registerinfo
 		where userid=#{param1} and userpwd=#{param2}
 	</select>
-	<!-- 여기 내가 넣었음 -->
 	<select id="idCheckCount" resultType="int">
 		select count(userid) cnt from registerinfo where userid=#{param1}
 	</select>

@@ -159,7 +159,7 @@
             select r.username, r.userid, r.tel, r.email, r.ranking, DATE_FORMAT(t.writedate,'%m-%d %H:%i') writedate, r.report 
             from registerinfo r join temp_stop t on r.userid=t.userid
             <if test="searchWord2!=null">
-               and ${searchKey} like concat('%', #{searchWord}, '%')
+               and ${searchKey2} like concat('%', #{searchWord2}, '%')
             </if>
             order by writedate desc 
             LIMIT #{limitStart2}, #{onePageRecord2}

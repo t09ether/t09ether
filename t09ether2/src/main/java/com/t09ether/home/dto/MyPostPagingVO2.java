@@ -1,13 +1,15 @@
 package com.t09ether.home.dto;
 
 public class MyPostPagingVO2 {
+
 	private int nowPage2; // 현재 페이지
 	private int onePageRecord2; // 한 페이지에 표시할 레코드 수
 	private int onePageNumCount2;//한 페이지 당 페이지 갯수
-	
-	//검색에 필요한 변수들
+
+	//검색변수
 	private String searchKey2;
 	private String searchWord2;
+
 	
 	public MyPostPagingVO2(){
 		this.nowPage2 = 1;
@@ -40,7 +42,6 @@ public class MyPostPagingVO2 {
 	public void setUserid(String userid) {
 		this.userid = userid;
 	}
-
 
 	public void setTotalRecord2(int totalRecord2) {
 		this.totalRecord2 = totalRecord2;
